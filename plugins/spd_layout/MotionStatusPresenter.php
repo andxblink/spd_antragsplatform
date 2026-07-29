@@ -18,78 +18,51 @@ use yii\helpers\Html;
 final class MotionStatusPresenter
 {
     /**
-     * @return array{kind: string, summary: string|null, next: string|null}
+     * Return presentation metadata without translating the configured status.
+     *
+     * The status engine owns the label and any workflow-specific meaning. A
+     * generic sentence derived from that label is safe to repeat, while a
+     * guessed next step is not. Custom and unknown states intentionally have
+     * no additive prose.
+     *
+     * @return array{kind: string, summary: string|null}
      */
-    private static function describe(int $status): array
+    private static function describe(IMotion $item): array
     {
-        return match ($status) {
+        $status = (int)$item->status;
+        $kind = match ($status) {
             IMotion::STATUS_DRAFT,
             IMotion::STATUS_DRAFT_ADMIN,
             IMotion::STATUS_MERGING_DRAFT_PUBLIC,
-            IMotion::STATUS_MERGING_DRAFT_PRIVATE => [
-                'kind' => 'draft',
-                'summary' => 'Der Antrag ist noch nicht eingereicht.',
-                'next' => 'Prüfe den Entwurf und reiche ihn ein, wenn er vollständig ist.',
-            ],
-            IMotion::STATUS_COLLECTING_SUPPORTERS => [
-                'kind' => 'collecting',
-                'summary' => 'Der Antrag sammelt die erforderlichen Unterstützungen.',
-                'next' => 'Die verfügbaren Unterstützungen und Aktionen stehen auf dieser Seite.',
-            ],
-            IMotion::STATUS_SUBMITTED_UNSCREENED => [
-                'kind' => 'submitted',
-                'summary' => 'Der Antrag wartet auf die formale Prüfung.',
-                'next' => 'Die zuständige Stelle prüft den Antrag.',
-            ],
-            IMotion::STATUS_SUBMITTED_UNSCREENED_CHECKED => [
-                'kind' => 'submitted',
-                'summary' => 'Der Antrag ist formal geprüft, aber noch nicht veröffentlicht.',
-                'next' => null,
-            ],
-            IMotion::STATUS_SUBMITTED_SCREENED => [
-                'kind' => 'published',
-                'summary' => 'Der Antrag ist eingereicht und für die Beratung sichtbar.',
-                'next' => 'Verfolge hier den weiteren Beratungs- und Entscheidungsstand.',
-            ],
+            IMotion::STATUS_MERGING_DRAFT_PRIVATE => 'draft',
+            IMotion::STATUS_COLLECTING_SUPPORTERS => 'collecting',
+            IMotion::STATUS_SUBMITTED_UNSCREENED,
+            IMotion::STATUS_SUBMITTED_UNSCREENED_CHECKED => 'submitted',
+            IMotion::STATUS_SUBMITTED_SCREENED => 'published',
             IMotion::STATUS_ACCEPTED,
-            IMotion::STATUS_ADOPTED => [
-                'kind' => 'accepted',
-                'summary' => 'Der Antrag wurde angenommen.',
-                'next' => 'Weitere Informationen zum Ergebnis erscheinen auf dieser Seite.',
-            ],
-            IMotion::STATUS_MODIFIED_ACCEPTED => [
-                'kind' => 'accepted',
-                'summary' => 'Der Antrag wurde mit Änderungen übernommen.',
-                'next' => 'Die beschlossene Fassung und weitere Informationen erscheinen auf dieser Seite.',
-            ],
-            IMotion::STATUS_REJECTED => [
-                'kind' => 'rejected',
-                'summary' => 'Der Antrag wurde abgelehnt.',
-                'next' => 'Weitere Informationen zum Ergebnis erscheinen auf dieser Seite.',
-            ],
-            IMotion::STATUS_REFERRED => [
-                'kind' => 'referred',
-                'summary' => 'Der Antrag wurde überwiesen.',
-                'next' => 'Verfolge hier den Stand der weiteren Beratung.',
-            ],
+            IMotion::STATUS_ADOPTED,
+            IMotion::STATUS_MODIFIED_ACCEPTED => 'accepted',
+            IMotion::STATUS_REJECTED => 'rejected',
+            IMotion::STATUS_REFERRED => 'referred',
             IMotion::STATUS_PROCESSED,
-            IMotion::STATUS_COMPLETED => [
-                'kind' => 'completed',
-                'summary' => 'Der Antrag wurde behandelt.',
-                'next' => 'Weitere Informationen zum Ergebnis erscheinen auf dieser Seite.',
-            ],
+            IMotion::STATUS_COMPLETED => 'completed',
             IMotion::STATUS_WITHDRAWN,
-            IMotion::STATUS_WITHDRAWN_INVISIBLE => [
-                'kind' => 'withdrawn',
-                'summary' => 'Der Antrag wurde zurückgezogen.',
-                'next' => 'Für diesen Antrag ist kein weiterer Schritt vorgesehen.',
-            ],
-            default => [
-                'kind' => 'other',
-                'summary' => null,
-                'next' => null,
-            ],
+            IMotion::STATUS_WITHDRAWN_INVISIBLE => 'withdrawn',
+            default => 'other',
         };
+
+        $summary = null;
+        if ($status !== IMotion::STATUS_CUSTOM_STRING) {
+            $statusName = trim($item->getMyConsultation()->getStatuses()->getStatusName($status));
+            if ($statusName !== '' && $statusName !== '???') {
+                $summary = 'Status: ' . $statusName;
+            }
+        }
+
+        return [
+            'kind' => $kind,
+            'summary' => $summary,
+        ];
     }
 
     private static function dateLine(IMotion $item): ?string
@@ -119,7 +92,7 @@ final class MotionStatusPresenter
      * a configured statusString is present. This normalization changes no
      * visible or legal content and applies equally to detail and list views.
      */
-    private static function authoritativeStatus(IMotion $item): string
+    private static function authoritativeStatus(Motion|Amendment $item): string
     {
         return str_replace('</string>', '</small>', $item->getFormattedStatus());
     }
@@ -131,7 +104,7 @@ final class MotionStatusPresenter
      */
     public static function renderDetail(Motion|Amendment $item): string
     {
-        $description = self::describe((int)$item->status);
+        $description = self::describe($item);
         $titleId = 'spdMotionStatusTitle' . self::itemId($item);
         $statusHtml = self::authoritativeStatus($item);
 
@@ -147,10 +120,6 @@ final class MotionStatusPresenter
         }
         if ($date = self::dateLine($item)) {
             $out .= '<p class="spdStatusDate">' . Html::encode($date) . '</p>';
-        }
-        if ($description['next'] !== null) {
-            $out .= '<p class="spdStatusNext"><strong>Nächster Schritt:</strong> ' .
-                Html::encode($description['next']) . '</p>';
         }
         if ($item instanceof Motion && $item->status === IMotion::STATUS_DRAFT && $item->canEditText()) {
             $url = UrlHelper::createMotionUrl($item, 'createconfirm', ['fromMode' => 'create']);
@@ -181,7 +150,7 @@ final class MotionStatusPresenter
 
     private static function appendItemListStatus(string $line, Motion|Amendment $item, string $type): string
     {
-        $description = self::describe((int)$item->status);
+        $description = self::describe($item);
         $statusHtml = self::authoritativeStatus($item);
 
         $out = '<p class="spdListStatus spdStatus-' . Html::encode($description['kind']) .

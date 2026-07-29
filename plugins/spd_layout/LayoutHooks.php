@@ -47,7 +47,17 @@ use yii\helpers\Html;
  */
 class LayoutHooks extends Hooks
 {
-    private const MODIFIED_SOURCE_URL = 'https://github.com/andxblink/spd_antragsplatform';
+    private const MODIFIED_SOURCE_REPOSITORY = 'https://github.com/andxblink/spd_antragsplatform';
+
+    private static function modifiedSourceUrl(): ?string
+    {
+        $commit = strtolower(trim((string)getenv('ANTRAGSPLATFORM_PUBLIC_SOURCE_COMMIT')));
+        if (!preg_match('/^[0-9a-f]{40}$/', $commit)) {
+            return null;
+        }
+
+        return self::MODIFIED_SOURCE_REPOSITORY . '/tree/' . $commit;
+    }
 
     /**
      * The upstream navbar is stateful hook output. Render it once per request,
@@ -1081,16 +1091,18 @@ class LayoutHooks extends Hooks
         ]) . ', Version ';
         $out .= Html::a(Html::encode(ANTRAGSGRUEN_VERSION), ANTRAGSGRUEN_HISTORY_URL, ['aria-label' => $ariaVersion]);
         $out .= '</span>';
-        $out .= Html::a(
-            \Yii::t('base', 'modified_source_code'),
-            self::MODIFIED_SOURCE_URL,
-            [
-                'class' => 'source',
-                'target' => '_blank',
-                'rel' => 'noopener noreferrer',
-                'aria-label' => \Yii::t('base', 'aria_modified_source_code'),
-            ]
-        );
+        if (($sourceUrl = self::modifiedSourceUrl()) !== null) {
+            $out .= Html::a(
+                \Yii::t('base', 'modified_source_code'),
+                $sourceUrl,
+                [
+                    'class' => 'source',
+                    'target' => '_blank',
+                    'rel' => 'noopener noreferrer',
+                    'aria-label' => \Yii::t('base', 'aria_modified_source_code'),
+                ]
+            );
+        }
 
         return $out;
     }
