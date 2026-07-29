@@ -19,8 +19,8 @@ use yii\helpers\Html;
  *
  * G3 in the PRD is "the UI is not recognisably Antragsgruen", so the wordmark
  * changes here while the footer keeps explicit upstream attribution. The
- * separate AGPL section 13 source offer for this modified version remains an
- * external publication gate until its canonical repository URL is known.
+ * separate AGPL section 13 source offer for this modified version links to
+ * the public source distribution published with this plugin.
  *
  * ---------------------------------------------------------------------------
  * The shell
@@ -47,6 +47,8 @@ use yii\helpers\Html;
  */
 class LayoutHooks extends Hooks
 {
+    private const MODIFIED_SOURCE_URL = 'https://github.com/andxblink/spd_antragsplatform';
+
     /**
      * The upstream navbar is stateful hook output. Render it once per request,
      * then derive the desktop and mobile presentations from the same markup.
@@ -794,8 +796,8 @@ class LayoutHooks extends Hooks
      * `SecondFactorAuthentication::createQrCode()` asks for this and falls back
      * to Antragsgrün's own apple-touch-icon, whose green and magenta reads as
      * another party's branding on an SPD site. It is not an attribution
-     * requirement. The footer link is upstream attribution, not the separate
-     * AGPL section 13 source offer for this modified version.
+     * requirement. The footer now carries both upstream attribution and the
+     * separate AGPL section 13 source offer for this modified version.
      *
      * The file is the SPD wordmark from Wikimedia (public domain for copyright,
      * trademarked as a mark), rasterised white on #E3000F with padding. The QR
@@ -1041,8 +1043,8 @@ class LayoutHooks extends Hooks
      * Imprint, privacy and the upstream attribution.
      *
      * Shared by the rail and the page footer. The Antragsgrün link preserves
-     * upstream attribution. The separate section 13 source offer for this
-     * modified version is tracked as a publication requirement.
+     * upstream attribution; the source link identifies this modified source
+     * distribution for AGPL section 13.
      */
     private function legalLinksHtml(bool $withIds = false): string
     {
@@ -1079,6 +1081,16 @@ class LayoutHooks extends Hooks
         ]) . ', Version ';
         $out .= Html::a(Html::encode(ANTRAGSGRUEN_VERSION), ANTRAGSGRUEN_HISTORY_URL, ['aria-label' => $ariaVersion]);
         $out .= '</span>';
+        $out .= Html::a(
+            \Yii::t('base', 'modified_source_code'),
+            self::MODIFIED_SOURCE_URL,
+            [
+                'class' => 'source',
+                'target' => '_blank',
+                'rel' => 'noopener noreferrer',
+                'aria-label' => \Yii::t('base', 'aria_modified_source_code'),
+            ]
+        );
 
         return $out;
     }

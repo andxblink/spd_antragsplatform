@@ -9,7 +9,7 @@ source snapshot plus the modified `plugins/spd_layout/` tree.
 - Upstream project: https://github.com/CatoTH/antragsgruen
 - Upstream version: `v4.17.1`
 - Upstream commit: `9e0e9f39622b7ee16c46d6e4b7756504262ef6ff`
-- SPD plugin source revision: `53229c804d4c746c3269b4dd8e7dac6f0e1467b3`
+- SPD plugin source revision: `1abd202f8d2dec1a2ccbc649de4db20da148950f`
 - Plugin directory: `plugins/spd_layout/`
 
 The plugin is selectable as the `std` layout and is not a replacement for the

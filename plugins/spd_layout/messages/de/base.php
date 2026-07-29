@@ -11,4 +11,6 @@ return [
     'err_cons_404' => 'Die angegebene Veranstaltung wurde nicht gefunden. Höchstwahrscheinlich liegt das an einem Tippfehler in der Adresse im Browser.<br><br>
 			Auf der <a href="%URL%">Antragsplatform-Startseite</a> siehst du rechts eine Liste der aktiven Veranstaltungen.',
     'html_meta' => 'Antragsplatform ist ein Antrags-Verwaltungs-System, das speziell für Parteitage, Verbandstagungen sowie Programmdiskussionen entwickelt wurde.',
+    'modified_source_code' => 'Quellcode dieser modifizierten Version',
+    'aria_modified_source_code' => 'Quellcode der modifizierten Version',
 ];
