@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+
+@import "variables";
+
+$firaSansFontPath: "../fonts/firasans/";
+@import "../fonts/firasans/firasans";
+$veraSansPath: "../fonts/BitstreamVeraSansMono";
+@import "../fonts/BitstreamVeraSansMono/verasans";
+
+$screen-md-min: ($container-md + 90px) !default; // Extra spacing for the "create motion button"
+$mainContentWidth: $container-md - $sidebarWidth !default;
+$content-max-width: $mainContentWidth - 2px !default;
+$grid-float-breakpoint: $screen-md-min !default;
+
+$colorDarkGrey: rgb(64, 64, 64);
+$colorMediumGrey: rgb(120, 120, 120);
+$colorLightGrey: rgb(166, 166, 166);
+$colorBlue: rgb(27, 74, 251);
+$colorRed: rgb(221,11,24);
+$colorGreen: green;
+$colorLinksLight: $colorRed;
+$colorLinks: $colorRed;
+$colorLinksFooter: $colorLinks;
+$linkTextDecoration: none;
+$colorDelLink: $colorRed;
+$colorMagenta: rgb(226, 0, 122);
+$brand-primary: $colorRed;
+$brand-success: $colorRed;
+$text-color: rgb(72, 70, 73);
+$btn-success-bg: $colorRed;
+$label-success-bg: $btn-success-bg;
+
+$headingFont: "FiraSans", sans-serif;
+$headingPrimaryText: rgb(255, 255, 255);
+$headingPrimaryBackground: $colorDarkGrey;
+$headingSecondaryText: #333;
+$headingSecondaryBackground: rgb(200, 200, 200);
+$headingTertiaryText: black;
+$headingTertiaryBackground: rgb(220, 220, 220);
+
+$headingFontBold: false !default;
+
+$menuFont: "FiraSans", sans-serif;
+$menuLink: rgb(100, 100, 100);
+$menuActive: rgb(51, 51, 51);
+$navbar-default-link-color: $menuLink;
+$breadcrumb-color: $menuLink;
+
+$sidebarBackground: $colorRed;
+$sidebarActionFont: "FiraSans", sans-serif;
+
+$bookmarkAmendmentBackground: $colorRed;
+$bookmarkCommentColor: $colorGreen;
+
+$bodyFont: "FiraSans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$deadlineCircleFont: "FiraSans", sans-serif;
+$buttonFont: "FiraSans", sans-serif;
+
+$motionFixedFont: 'VeraMono', Consolas, Courier, sans-serif;
+$motionFixedFontColor: #222;
+$motionFixedWidth: 740px;
+$motionStdFontSize: 14px;
+$inlineAmendmentPreambleHeight: 35px;
+$inlineAmendmentPreambleColor: $colorRed;
+$createMotionBtnColor: $colorRed;
+
+@import "bootstrap";
+@import "fontello";
+@import "wizard";
+@import "helpers";
+@import "elements";
+@import "bootstrap_overwrites";
+@import "base_layout";
+@import "contentpage";
+@import "consultation_motion_list";
+@import "speech_lists";
+@import "voting";
+@import "motions";
+@import "proposed_procedure";
+@import "styles";
+@import "merging";
+@import "sidebar";
+@import "projector";
+@import "user_pages";
+
+.motionListStd .motion .title a  {
+  font-family: "FiraSans", sans-serif;
+}
+
+html {
+  background: #f5f5f5;
+}
+body {
+  background: #f5f5f5
+}
+.logoImg {
+  display: block;
+  width: 377px;
+  height: 55px;
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  @media screen and (max-width: 479px) {
+    width: 300px;
+    height: 44px;
+    background-size: 300px 44px;
+  }
+}
+
+
+.adminMotionTable {
+  tr.motion {
+    .prefixCol, .titleCol {
+      font-weight: bold;
+    }
+  }
+}

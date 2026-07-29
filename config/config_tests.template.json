@@ -1,0 +1,35 @@
+{
+  "dbConnection": {
+    "dsn": "mysql:host=127.0.0.1;port=32768;dbname=yii",
+    "emulatePrepare": true,
+    "username": "yii",
+    "password": "yii",
+    "charset": "utf8mb4"
+  },
+  "mailService": {
+    "transport": "sendmail"
+  },
+  "baseLanguage": "de",
+  "multisiteMode": true,
+  "confirmEmailAddresses": true,
+  "captcha": {
+    "ignoredIps": [
+      "127.0.0.1",
+      "::1"
+    ]
+  },
+  "domainPlain": "http://localhost:8080/index-test.php",
+  "domainSubdomain": "http://localhost:8080/index-test.php",
+  "prependWWWToSubdomain": false,
+  "randomSeed": "123456",
+  "mailFromName": "Antragsgrün Test",
+  "mailFromEmail": "test@antragsgruen.de",
+  "adminUserIds": [
+    3
+  ],
+  "plugins": [
+    "gruen_ci",
+    "antragsgruen_sites"
+  ],
+  "pdfExportConcat": true
+}

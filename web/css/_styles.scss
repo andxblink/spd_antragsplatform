@@ -1,0 +1,735 @@
+@charset "UTF-8";
+
+.texteditorBox {
+  min-height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.texteditor {
+  background-color: white;
+
+  &.boxed {
+    @extend .texteditorBox;
+  }
+  &.fixedWidthFont {
+    font-family: $motionFixedFont;
+    //letter-spacing: -0.5px;
+    color: $motionFixedFontColor;
+  }
+
+  > * {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: $fixedWidthTextStdPadding - 40;
+    margin-bottom: 5px;
+  }
+  > span:first-child {
+    // Inserted by magic-line plugin of CKEditor
+    padding: 0;
+  }
+
+  .collidingParagraph.hovered {
+    background-color: #eee;
+  }
+
+  > ul, ol {
+    padding-left: $fixedWidthTextListPadding + $fixedWidthTextStdPadding - 40;
+  }
+  > blockquote {
+    @include motionParagraphBlockquote;
+    margin-left: $fixedWidthTextQuoteMargin + $fixedWidthTextStdPadding - 40;
+  }
+  span.underline {
+    border-bottom: solid 1px black;
+  }
+  span.strike {
+    text-decoration: line-through;
+  }
+  span.subscript {
+    // @TODO
+  }
+  span.superscript {
+    // @TODO
+  }
+}
+
+#mainmenu {
+  max-width: $container-md;
+
+  .nav > li {
+    display: inline-block;
+  }
+  li.addPage {
+    width: 0;
+    position: relative;
+    a {
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      left: 10px;
+      margin: 0;
+
+      .glyphicon {
+        opacity: 0.3;
+      }
+    }
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    .container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .navbar .nav li a {
+      margin-left: 20px;
+    }
+  }
+}
+
+.motionDataTable {
+  width: 100%;
+  overflow-wrap: break-word;
+  table-layout: fixed;
+
+  > caption {
+    display: none;
+  }
+
+  > tbody > tr > th {
+    width: 30%;
+    vertical-align: top;
+    padding-right: 10px;
+  }
+
+  .mergingDraft > * {
+    padding-top: 15px;
+  }
+
+  // Hint: full-sceen styles in _projector.scss
+}
+
+.motionData {
+  .tagAdderHolder:link, .tagAdderHolder:visited {
+    color: green;
+  }
+  .delTagForm {
+    display: inline;
+    button {
+      background: transparent;
+      border: none;
+      color: $colorDelLink;
+      font-style: italic;
+      padding: 0 6px 0 3px;
+      @include outlineOnFocusNoBorder();
+    }
+  }
+  > .content > .alert {
+    margin-top: 20px;
+  }
+  .motionHistory {
+    .fullHistory .currVersion {
+      font-weight: bold;
+    }
+    .date {
+      font-size: 0.8em;
+      display: inline-block;
+      padding-left: 5px;
+    }
+    .changesLink {
+      font-size: 0.8em;
+    }
+    .btnHistoryOpener {
+      font-weight: normal;
+      font-size: 0.8em;
+      padding: 0 0 0 15px;
+    }
+  }
+  .motionProtocol {
+    button {
+      font-weight: normal;
+      padding: 0;
+      font-size: .8em;
+    }
+  }
+  .motionReplayedBy {
+    a {
+      font-weight: bold;
+    }
+  }
+  .contactShow {
+    font-size: 0.8em;
+    font-weight: normal;
+    margin-left: 15px;
+    padding: 0;
+  }
+  .explanation {
+    font-size: 0.8em;
+    margin-left: 2px;
+  }
+  .notVisible {
+    font-size: 0.8em;
+    color: $adminHintColor;
+    font-style: italic;
+  }
+}
+
+.wysiwyg-textarea {
+  .alert {
+    margin-bottom: 8px;
+  }
+  textarea {
+    display: none;
+  }
+}
+
+.search-form label {
+  display: inline-block;
+  width: 220px;
+  vertical-align: top;
+}
+
+.labeledCheckbox {
+  cursor: pointer;
+
+  span {
+    font-weight: normal;
+  }
+}
+
+.cke_skin_kama {
+  border: none !important;
+}
+
+.motionEditForm {
+  .maxLenHint {
+    float: right;
+    margin-top: 7px;
+    font-size: 0.8em;
+    margin-right: 3px;
+
+    span.icon {
+      color: gray;
+    }
+    span.counter {
+      display: inline-block;
+      width: 23px;
+      text-align: right;
+    }
+  }
+  .legend {
+    font-weight: bold;
+  }
+  label.optional {
+    &:after {
+      content: "(" attr(data-optional-str) ")";
+      font-weight: normal;
+      font-style: italic;
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 0.9em;
+    }
+  }
+  .tagsSelect {
+    label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 15px;
+    }
+  }
+  .submitHolder {
+    text-align: right;
+  }
+  .editorialGlobalBar {
+    background-color: #f7f7f7;
+    border-bottom: solid 1px #ccc;
+    padding: 0 20px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+
+    label {
+      flex: 1;
+      padding: 5px 0;
+      margin: 0;
+      font-weight: normal;
+      color: #777;
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+    input {
+      margin-right: 5px;
+    }
+  }
+  .modifiedActions {
+    text-align: right;
+    .btn {
+      font-weight: normal;
+      padding: 0;
+    }
+  }
+  .single-paragraph {
+    .modifiedActions {
+      display: none;
+    }
+    &.modified {
+      background-color: #eee;
+      .modifiedActions {
+        display: block;
+      }
+    }
+    &.modifyable {
+      cursor: pointer;
+      &:hover {
+        background-color: #f4f4f4;
+        > .texteditor {
+          background-color: transparent;
+        }
+      }
+    }
+    .oneChangeHint {
+      background-color: white;
+      padding: 5px 15px;
+      margin-top: -5px;
+      .alert {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .type3 { // Images
+    overflow: auto;
+    .currentImage {
+      float: right;
+      max-width: 100px;
+      max-height: 100px;
+      margin-left: 20px;
+    }
+    .form-group {
+      overflow: auto;
+    }
+    .deleteImage {
+      font-weight: normal;
+    }
+  }
+  .type5 { // PDFs
+    overflow: auto;
+    .currentPdf {
+      float: right;
+    }
+    .form-group {
+      overflow: auto;
+    }
+    .deletePdf {
+      font-weight: normal;
+    }
+  }
+  .type9 { // Choice
+    margin-bottom: 15px;
+    .choiceLabel {
+      display: block;
+      font-weight: normal;
+    }
+  }
+}
+
+#supporterFullTextHolder {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+
+  .textHolder {
+    width: 70%;
+  }
+  .btnHolder {
+    width: 30%;
+    text-align: right;
+  }
+}
+
+.supporterFormStd {
+
+  .supporterData {
+    .fullTextAdder {
+      float: right;
+      button {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .adderLink {
+    font-weight: normal;
+    padding: 0;
+  }
+
+  .initiatorData {
+    .control-label {
+      font-weight: bold;
+    }
+    .leftColumn {
+      padding-top: 18px;
+    }
+
+    .contactHead {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      @media screen and (min-width: $screenMinWith) {
+        width: 70%;
+        text-align: center;
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 0;
+      }
+      .hint {
+        font-size: 12px;
+      }
+    }
+
+    .only-person, .only-organization {
+      display: none;
+    }
+    &.type-person .only-person {
+      display: inherit;
+    }
+    &.type-organization .only-organization {
+      display: inherit;
+    }
+
+    .initiatorCurrentUsername {
+      .username {
+        padding-top: 7px;
+      }
+      .btnEdit {
+        display: inline;
+      }
+    }
+
+    .initiatorSetUsername {
+      .btn {
+        text-align: left;
+      }
+    }
+  }
+
+  .supporterRow, .initiatorRow {
+    .adderRow button {
+      font-weight: normal;
+    }
+    .rowDeleter, .rowDeleter:link, .rowDeleter:visited {
+      color: $colorDelLink;
+      display: inline-block;
+    }
+    @media (hover: hover) {
+      & .rowDeleter {
+        opacity: 0;
+      }
+      &:hover .rowDeleter, &:focus-within .rowDeleter {
+        opacity: 1;
+      }
+    }
+  }
+  .supporterRow {
+    margin-bottom: 10px;
+  }
+  .initiatorRow .rightColumn, .supporterRow {
+    display: flex;
+    width: 100%;
+
+    .nameCol { // Hint: does not exist for .supporterRow
+      flex-basis: 65%;
+      flex-grow: 0;
+      padding-right: 10px;
+    }
+    .orgaCal {
+      flex-grow: 1;
+    }
+    .delCol {
+      flex-basis: 20px;
+      flex-grow: 0;
+    }
+  }
+  .moreInitiatorsAdder {
+    text-align: right;
+    .adderBtn {
+      padding: 0;
+      font-size: 0.8em;
+      font-weight: normal;
+    }
+  }
+}
+
+#motionConfirmedForm {
+  .promoUrl {
+    input[type=text] {
+      font-weight: bold;
+      font-family: $motionFixedFont;
+    }
+    .clipboard-done {
+      text-align: center;
+      font-size: 0.8em;
+      color: green;
+      font-weight: normal;
+      margin-top: -13px;
+    }
+    button.btn {
+      padding-bottom: 7px;
+    }
+  }
+  .btnRow {
+    padding: 15px;
+    text-align: center;
+  }
+}
+
+#motionConfirmForm, #amendmentConfirmForm {
+  margin-bottom: 20px;
+}
+
+.motionUpdateWidget {
+  text-align: right;
+  padding-top: 10px;
+
+  .updated {
+    text-align: center;
+    padding-top: 5px;
+    font-size: 0.8em;
+    color: green;
+    opacity: 0;
+    transition: opacity 0.1s;
+    &.active {
+      opacity: 1;
+      transition: opacity 0.1s;
+    }
+  }
+}
+
+
+span.twitter-typeahead {
+  .tt-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 250px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+  }
+  .tt-suggestion {
+    display: block;
+    padding: 3px 10px 3px 20px;
+    margin: 5px 0;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    font-size: 14px;
+
+    &:hover, &:focus {
+      color: #ffffff;
+      text-decoration: none;
+      outline: 0;
+      background-color: #88A4A0;
+    }
+    &.tt-cursor {
+      color: #ffffff;
+      background-color: #88A4A0;
+    }
+  }
+
+  .input-group & {
+    display: block !important;
+  }
+  .input-group & .tt-dropdown-menu {
+    top: 32px !important;
+  }
+  .input-group.input-group-lg & .tt-dropdown-menu {
+    top: 44px !important;
+  }
+  .input-group.input-group-sm & .tt-dropdown-menu {
+    top: 28px !important;
+  }
+
+}
+
+ul.searchResults {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  > li {
+    margin: 0;
+    padding: 10px;
+    .type {
+      display: block;
+      float: left;
+      width: 120px;
+      overflow: hidden;
+      -ms-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+    }
+    .title {
+
+    }
+  }
+}
+
+.activityLogPage {
+  .date {
+    float: right;
+    color: gray;
+  }
+  .motion, .voting {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .description {
+    margin-top: 10px;
+  }
+  .deleted {
+    color: gray;
+    //font-weight: normal;
+    font-style: italic;
+  }
+  .quote {
+    color: gray;
+
+    &:before {
+      content: '„';
+      display: inline;
+    }
+    &:after {
+      content: '“';
+      display: inline;
+    }
+  }
+}
+
+.createSelectStatutes {
+  .statute {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.createConfirmPage {
+  .sectionType3 {
+    padding-left: $fixedWidthTextStdPadding;
+  }
+}
+
+
+.amendmentAjaxTooltip {
+  cursor: pointer;
+}
+
+h2.green .amendmentAjaxTooltip, h3.green .amendmentAjaxTooltip {
+  float: right;
+  color: gray;
+  margin-right: -10px;
+}
+
+.popover-amendment-ajax {
+  width: 250px;
+  max-width: none;
+  color: black;
+
+  @media (min-width: $screenMinWith) {
+    width: 400px;
+  }
+  @media (min-width: 1200px) {
+    width: 600px;
+  }
+  .popover-content {
+    padding-right: 0;
+  }
+  &.fixedBottom {
+    left: 25.7969px;
+    display: block;
+    bottom: 37px;
+    position: fixed;
+    top: initial !important;
+  }
+}
+
+.ajaxAmendment {
+  max-height: 250px;
+  overflow: auto;
+  > h3 {
+    display: none;
+  }
+  h4 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  .amendmentLink {
+    float: right;
+    margin-right: 10px;
+  }
+}
+
+.countries {
+  border: none !important;
+}
+
+.uploadCol {
+  position: relative;
+  max-width: 200px;
+  display: inline-block;
+
+  label {
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  input {
+    opacity: 0;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  &:focus-within label {
+    outline: solid 2px grey;
+    outline-offset: 0;
+  }
+  body.usingMouse &:focus-within label {
+    outline: none;
+  }
+}
+
+@if ($uppercaseTitles) {
+  .motionTitle {
+    text-transform: uppercase;
+  }
+}

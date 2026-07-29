@@ -1,0 +1,121 @@
+<?php
+
+use app\components\UrlHelper;
+use app\models\proposedProcedure\Agenda;
+use yii\helpers\Html;
+
+/**
+ * @var yii\web\View $this
+ * @var Agenda[] $proposedAgenda
+ * @var bool $expandAll
+ * @var null|string $expandId
+ * @var null|int $tagId
+ * @var bool $minimal
+ */
+
+/** @var \app\controllers\ConsultationController $controller */
+$controller         = $this->context;
+$layout             = $controller->layoutParams;
+$layout->fullWidth  = true;
+$layout->fullScreen = true;
+$consultation = $controller->consultation;
+
+$this->title = Yii::t('con', 'proposal_title_internal');
+$layout->addBreadcrumb(Yii::t('admin', 'bread_list'), UrlHelper::createUrl(['/admin/motion-list/index', 'minimal' => ($minimal ? 1 : 0)]));
+$layout->addBreadcrumb(Yii::t('con', 'proposal_bc'));
+$layout->loadBootstrapToggle();
+$layout->loadSelectize();
+$layout->addCSS('css/backend.css');
+
+echo '<h1>' . Html::encode($this->title) . '</h1>';
+
+$layout->addJsTranslation("motion");
+?>
+    <script type="module" crossorigin="anonymous">
+        import { ProposedProcedureOverview } from "/js/modules/backend/ProposedProcedureOverview.js";
+        new ProposedProcedureOverview(document.querySelector(".proposedProcedureReloadHolder"));
+    </script>
+<?php
+
+$reloadOptions = ['admin/proposed-procedure/index-ajax', 'minimal' => ($minimal ? 1 : 0)];
+if ($expandId) {
+    $reloadOptions['expandId'] = $expandId;
+}
+if ($tagId) {
+    $reloadOptions['tagId'] = $tagId;
+}
+$reloadUrl = UrlHelper::createUrl($reloadOptions);
+echo Html::beginForm('', 'post', [
+    'class'                    => 'proposedProcedureReloadHolder',
+    'data-reload-url'          => $reloadUrl,
+]);
+?>
+    <section class="proposedProcedureToolbar toolbarBelowTitle">
+        <div class="left">
+            <div class="currentDate">
+                <?= Yii::t('con', 'proposal_updated') ?>:
+                <span class="date"><?= date('H:i:s') ?></span>
+            </div>
+        </div>
+        <div class="right">
+            <?= $this->render('_switch_dropdown') ?>
+            <script type="module" crossorigin="anonymous">
+                import { ProposedProcedureExport } from "/js/modules/backend/ProposedProcedureExport.js";
+                new ProposedProcedureExport(document.querySelector(".exportProcedureDd"));
+            </script>
+            <?= $this->render('_functions_dropdown') ?>
+            <div class="autoUpdateWidget">
+                <label class="sr-only" for="autoUpdateToggle"></label>
+                <input type="checkbox" id="autoUpdateToggle"
+                       data-onstyle="success" data-size="normal" data-toggle="toggle"
+                       data-on="<?= Html::encode(Yii::t('con', 'proposal_autoupdate')) ?>"
+                       data-off="<?= Html::encode(Yii::t('con', 'proposal_autoupdate')) ?>">
+            </div>
+            <div class="fullscreenToggle">
+                <button class="btn btn-default" type="button" data-antragsgruen-widget="frontend/FullscreenToggle">
+                    <span class="glyphicon glyphicon-fullscreen" title="Fullscreen" aria-label="Fullscreen"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+<?php
+if (!$minimal) {
+    ?>
+    <section class="motionListFilter content" id="motionListSorter" aria-labelledby="motionListSorterTitle">
+        <?php
+        $tags = $consultation->getSortedTags(\app\models\db\ConsultationSettingsTag::TYPE_PROPOSED_PROCEDURE);
+        ?>
+        <div>
+            <div class="tagList">
+                <?php
+                $url = UrlHelper::createUrl(['admin/proposed-procedure/index', 'minimal' => ($minimal ? 1 : 0)]);
+                $btn = ($tagId === null ? 'btn-info' : 'btn-defult');
+                echo '<a href="' . Html::encode($url) . '" class="btn ' . $btn . ' btn-xs tagAll" data-filter="*">' . Yii::t('con', 'discuss_filter_all') . '</a>';
+
+                foreach ($tags as $tag) {
+                    $url = UrlHelper::createUrl(['admin/proposed-procedure/index', 'minimal' => ($minimal ? 1 : 0), 'tagId' => $tag->id]);
+                    $btn = ($tagId === $tag->id ? 'btn-info' : 'btn-defult');
+                    echo '<a href="' . Html::encode($url) . '" class="btn ' . $btn . ' btn-xs tag' . $tag->id . '">';
+                    echo Html::encode($tag->title) . '</span></a>';
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+    <?php
+}
+?>
+
+    <div class="reloadContent">
+        <?= $controller->showErrors() ?>
+        <?= $this->render('_index_content', [
+            'proposedAgenda' => $proposedAgenda,
+            'expandAll'      => $expandAll,
+            'expandId'       => $expandId,
+            'tagId'          => $tagId,
+            'minimal'        => $minimal,
+        ]) ?>
+    </div>
+<?php
+echo Html::endForm();

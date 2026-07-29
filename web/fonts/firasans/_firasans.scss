@@ -1,0 +1,30 @@
+$firaSansFontPath: './' !default;
+
+@font-face {
+  font-family: 'FiraSans';
+  font-style: normal;
+  font-weight: normal;
+  src: url($firaSansFontPath + 'FiraSans-Light.woff2') format('woff2'),
+  url($firaSansFontPath + 'FiraSans-Light.woff') format('woff');
+}
+@font-face {
+  font-family: 'FiraSans';
+  font-style: italic;
+  font-weight: normal;
+  src: url($firaSansFontPath + 'FiraSans-LightItalic.woff2') format('woff2'),
+  url($firaSansFontPath + 'FiraSans-LightItalic.woff') format('woff');
+}
+@font-face {
+  font-family: 'FiraSans';
+  font-style: normal;
+  font-weight: bold;
+  src: url($firaSansFontPath + 'FiraSans-Medium.woff2') format('woff2'),
+  url($firaSansFontPath + 'FiraSans-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'FiraSans';
+  font-style: italic;
+  font-weight: bold;
+  src: url($firaSansFontPath + 'FiraSans-MediumItalic.woff2') format('woff2'),
+  url($firaSansFontPath + 'FiraSans-MediumItalic.woff') format('woff');
+}

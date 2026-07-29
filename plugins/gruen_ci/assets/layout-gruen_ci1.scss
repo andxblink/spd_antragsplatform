@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+$icon-font-path: "../../fonts/";
+@import "css/variables";
+
+$arvoFontPath: "./";
+@import "arvo";
+$ptSansFontPath: "./";
+@import "ptsans";
+
+$colorLinksLight: #6d7e00;
+$colorLinks: #6d7e00;
+$colorLinksFooter: $colorLinks;
+$linkTextDecoration: none;
+$colorDelLink: #FF7777;
+$colorMagenta: rgb(226, 0, 122);
+$brand-primary: $colorMagenta;
+$text-color: rgb(72, 70, 73);
+$btn-success-bg: #2c882c;
+$label-success-bg: $btn-success-bg;
+
+$headingFont: "Arvo", sans-serif;
+$headingPrimaryText: rgb(255, 255, 255);
+$headingPrimaryBackground: rgb(40, 95, 25);
+$headingSecondaryText: rgb(255, 255, 255);
+$headingSecondaryBackground: rgb(175, 203, 8);
+$headingTertiaryText: black;
+$headingTertiaryBackground: rgb(27, 74, 251);
+
+$menuDefaultLogo: "../../img/logo.png";
+$menuDefaultLogoWidth: 89px;
+$menuDefaultLogoHeight: 89px;
+$menuFont: "Arvo", sans-serif;
+$menuLink: #6d7e00;
+$menuActive: rgb(115, 115, 115);
+
+$sidebarBackground: $colorMagenta;
+$sidebarActionFont: "Arvo", sans-serif;
+
+$bookmarkAmendmentBackground: $colorGreenLight;
+$bookmarkCommentColor: $colorMagenta;
+
+$bodyFont: "PT Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$deadlineCircleFont: "Arvo", sans-serif;
+$sidebarActionFont: "Arvo", sans-serif;
+$buttonFont: "Arvo", sans-serif;
+$motionFixedFont: 'PT Sans', Courier, sans-serif;
+$motionFixedFontColor: black;
+$motionFixedWidth: 733px;
+$motionStdFontSize: 16px;
+$inlineAmendmentPreambleHeight: 35px;
+$inlineAmendmentPreambleColor: $colorMagenta;
+$createMotionBtnColor: $colorMagenta;
+
+$screen-md-min: $container-md !default;
+$mainContentWidth: $container-md - $sidebarWidth !default;
+$content-max-width: $mainContentWidth - 2px !default;
+$grid-float-breakpoint: $container-md - 32px !default; // $screen-md-min;
+
+@import "css/bootstrap";
+@import "css/fontello";
+@import "css/wizard";
+@import "css/helpers";
+@import "css/elements";
+@import "css/bootstrap_overwrites";
+@import "css/base_layout";
+@import "css/contentpage";
+@import "css/consultation_motion_list";
+@import "css/speech_lists";
+@import "css/voting";
+@import "css/motions";
+@import "css/proposed_procedure";
+@import "css/styles";
+@import "css/merging";
+@import "css/sidebar";
+@import "css/projector";
+@import "css/user_pages";
+
+html {
+  background: url("../../img/wallpaper.jpg") repeat scroll 0 0 transparent;
+}
+body {
+  background: url("../../img/backgroundGradient.png") repeat-x scroll 0 0 transparent;
+}
+.logoImg {
+  display: block;
+  width: 377px;
+  height: 55px;
+  background-image: url("../../img/logo.png");
+  @media screen and (max-width: 479px) {
+    width: 300px;
+    height: 44px;
+    background-size: 300px 44px;
+  }
+}
+
+
+.well h1 {
+  font-family: "Arvo Gruen", sans-serif;
+  font-weight: normal;
+}
+.motionListStd .motion .title a  {
+  font-family: "Arvo", sans-serif;
+}

@@ -1,0 +1,843 @@
+openapi: 3.0.0
+info:
+  title: Antragsgrün API
+  description: Read-Only-API for [Antragsgrün](https://antragsgruen.de/)
+  version: 0.3.0
+paths:
+  /rest:
+    get:
+      summary: List of consultations in this site
+      responses:
+        '200':
+          description: Consultation list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsultationLinkList'
+        '403':
+          description: The REST API is not enabled for this consultation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiDisabled'
+  /rest/{consultationPath}:
+    get:
+      summary: Overview over this consultation, with links to motions and amendments.
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Consultation info, motion and amendment links
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsultationWithLinks'
+        '403':
+          description: The REST API is not enabled for this consultation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiDisabled'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /rest/{consultationPath}/proposed-procedure:
+    get:
+      summary: Gets the public proposed procedure of this consultation
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The proposed procedure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProposedProcedure'
+        '403':
+          description: The REST API is not enabled for this consultation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiDisabled'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /rest/{consultationPath}/motion/{motionSlug}:
+    get:
+      summary: Details of this motion
+      description: The URL of this endpoint is not 100% predictable (because of motionSlug) - please only use the links provided by the consultation index
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+        - in: path
+          name: motionSlug
+          required: true
+          example: 123-motion
+          schema:
+            type: string
+        - in: query
+          name: lineNumbers
+          required: false
+          example: true
+          description: If true, then line number markers will be returned in the text (if there are any)
+          schema:
+            type: boolean
+      responses:
+        '200': # status code
+          description: Motion info, including links to amendments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotionDetails'
+        '403':
+          description: The REST API is not enabled for this consultation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiDisabled'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /rest/{consultationPath}/motion/{motionSlug}/amendment/{amendmentId}:
+    get:
+      summary: Details of this amendment
+      description: The URL of this endpoint is not 100% predictable (because of motionSlug) - please only use the links provided by the consultation index
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+        - in: path
+          name: motionSlug
+          required: true
+          example: 123-motion
+          schema:
+            type: string
+        - in: path
+          name: amendmentId
+          required: true
+          example: 42
+          schema:
+            type: string
+      responses:
+        '200': # status code
+          description: Motion info, including links to amendments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmendmentDetails'
+        '403':
+          description: The REST API is not enabled for this consultation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiDisabled'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /rest/{consultationPath}/agenda:
+    get:
+      summary: Gets the agenda of this consultation
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The agenda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agenda'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+    post:
+      summary: Save the new agenda
+      parameters:
+        - in: path
+          name: consultationPath
+          required: true
+          example: std-parteitag
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Agenda'
+      responses:
+        '200':
+          description: The agenda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agenda'
+        '403':
+          description: No permission to edit the agenda
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNoPermission'
+        '404':
+          description: The consultation was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+components:
+  schemas:
+    Agenda:
+      type: array
+      items:
+        $ref: '#/components/schemas/AgendaItem'
+
+    AgendaItem:
+      type: object
+      required:
+        - type
+        - title
+      properties:
+        id:
+          type: number
+          description: Always set when retrieving the agenda; only optional when saving, for newly created items.
+          example: 12
+        type:
+          type: string
+          enum:
+            - item
+            - date_separator
+        code:
+          type: string
+          description: If not set or null (default), the agenda item code will be automatically determined.
+          example: "7."
+        title:
+          type: string
+          example: "Discussion about motions"
+        time:
+          type: string
+          example: "12:34"
+          description: Time in 24h format
+        date:
+          type: string
+          example: "2020-12-31"
+          description: Only relevant for type=date_separator. Format is YYYY-MM-DD
+        settings:
+          type: object
+          required:
+            - has_speaking_list
+            - in_proposed_procedures
+          properties:
+            has_speaking_list:
+              type: boolean
+            in_proposed_procedures:
+              type: boolean
+            motion_types:
+              type: array
+              items:
+                type: number
+              description: List of Motion Type IDs permissible for this agenda item. At the moment, only one is supported, subject to future enhancements.
+              example:
+                - 12
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgendaItem'
+
+    ConsultationLinkList:
+      type: array
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+            example: 44. Bundesdelegiertenkonferenz
+          title_short:
+            type: string
+            example: 44. BDK
+          date_published:
+            type: string
+            example: "2015-03-30T03:27:20+02:00"
+          url_path:
+            type: string
+            example: consultation
+          url_json:
+            type: string
+            example: https://test.antragsgruen.de/rest/consultation
+          url_html:
+            type: string
+            example: https://test.antragsgruen.de/consultation
+    ConsultationWithLinks:
+      properties:
+        title:
+          type: string
+          example: 44. Bundesdelegiertenkonferenz
+        title_short:
+          type: string
+          example: 44. BDK
+        motion_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/MotionLinkWithAmendmentLinks'
+        speaking_lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeakingList'
+        page_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLinks'
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation
+    MotionLinkWithAmendmentLinks:
+      properties:
+        type:
+          type: string
+          description: Describes if this is a motion or an amendment (e.g., a statute amendment to be shown like a motion)
+          enum:
+            - motion
+            - amendment
+        id:
+          type: number
+          example: 23
+        agenda_item:
+          type: string
+          example: Title of the agenda item
+        prefix:
+          type: string
+          example: A1
+        title:
+          type: string
+          example: Pure title of the motion
+        title_with_intro:
+          type: string
+          example: "Motion A1: Pure title of the motion"
+        title_with_prefix:
+          type: string
+          example: "A1: Pure title of the motion"
+        status_id:
+          type: number
+          example: 3
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Eingereicht
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        amendment_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmendmentLink'
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion
+    PageLinks:
+      properties:
+        id:
+          type: number
+          example: 23
+        in_menu:
+          type: boolean
+          description: Indicates if this page is shown in the main menu
+        title:
+          type: string
+          example: Pure title of the motion
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/page/testpage
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/page/testpage
+    MotionLink:
+      properties:
+        id:
+          type: number
+          example: 23
+        agenda_item:
+          type: string
+          example: Title of the agenda item
+        prefix:
+          type: string
+          example: A1
+        title:
+          type: string
+          example: Pure title of the motion
+        title_with_intro:
+          type: string
+          example: "Motion A1: Pure title of the motion"
+        title_with_prefix:
+          type: string
+          example: "A1: Pure title of the motion"
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion
+    MotionDetails:
+      properties:
+        type:
+          type: string
+          example: motion
+        id:
+          type: number
+          example: 23
+        agenda_item:
+          type: string
+          example: Title of the agenda item
+        prefix:
+          type: string
+          example: A1
+        title:
+          type: string
+          example: Pure title of the motion
+        title_with_intro:
+          type: string
+          example: "Motion A1: Pure title of the motion"
+        title_with_prefix:
+          type: string
+          example: "A1: Pure title of the motion"
+        status_id:
+          type: number
+          example: 3
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Eingereicht
+        date_published:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+        supporters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supporter'
+        initiators:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supporter'
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/MotionSection'
+        proposed_procedure:
+          $ref: '#/components/schemas/MotionProposedProcedure'
+        amendment_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmendmentLink'
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion
+    AmendmentLink:
+      properties:
+        id:
+          type: number
+          example: 23
+        prefix:
+          type: string
+          example: Ä1
+        status_id:
+          type: number
+          example: 3
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Eingereicht
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion/amendment/42
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion/42
+    AmendmentDetails:
+      properties:
+        type:
+          type: string
+          example: amendment
+        id:
+          type: number
+          example: 23
+        prefix:
+          type: string
+          example: Ä1
+        title:
+          type: string
+          example: "Ä1 zu A1: My motion"
+        title_with_prefix:
+          type: string
+          example: "Ä1 zu A1: My motion"
+        first_line:
+          type: number
+          example: 1
+          description: The first line affected by this amendment
+        status_id:
+          type: number
+          example: 3
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Eingereicht
+        date_published:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+        motion:
+          $ref: '#/components/schemas/MotionLink'
+        supporters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supporter'
+        initiators:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supporter'
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmendmentSection'
+        proposed_procedure:
+          $ref: '#/components/schemas/AmendmentProposedProcedure'
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion/amendment/42
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion/42
+    Supporter:
+      properties:
+        type:
+          type: string
+          example: person
+          description: Describes if it is a natural person or an organization
+          enum:
+            - person
+            - organization
+        name:
+          type: string
+          example: Ava
+        organization:
+          type: string
+          example: E Corp
+    MotionSection:
+      properties:
+        type:
+          type: string
+          example: TextSimple
+          enum:
+            - Title
+            - TextSimple
+            - TextHTML
+            - Image
+            - TabularData
+            - PDFAttachment
+            - PDFAlternative
+        title:
+          type: string
+          example: Motion text
+        html:
+          type: string
+          example: "<strong>This is the motion text</strong>"
+        layout_right:
+          type: boolean
+          example: true
+          description: In case of a two-column layout, true indicates this section is to be shown on the right
+    AmendmentSection:
+      properties:
+        type:
+          type: string
+          example: TextSimple
+          enum:
+            - Title
+            - TextSimple
+            - TextHTML
+            - Image
+            - TabularData
+            - PDFAttachment
+            - PDFAlternative
+        title:
+          type: string
+          example: Motion text
+        html:
+          type: string
+          example: "<h3>Antragstext</h3><h4 class=\"lineSummary\">Von Zeile 23 bis 26:</h4><div><p>Dolor lorem. <ins style=\"color:#008000;text-decoration:underline;\">Bavaria</ins> ipsum dolor</p></div>"
+    AmendmentProposedProcedure:
+      description: this object is only set if the proposed procedure exists and is public; otherwise the field is "null"
+      properties:
+        status_id:
+          type: number
+          example: 6
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Modifizierte Übernahme
+        sections:
+          type: array
+          description: The proposed changed version of amendment sections; if there are propsed changes
+          items:
+            $ref: '#/components/schemas/AmendmentSection'
+    MotionProposedProcedure:
+      description: this object is only set if the proposed procedure exists and is public; otherwise the field is "null"
+      properties:
+        status_id:
+          type: number
+          example: 6
+          description: Refer to https://github.com/CatoTH/antragsgruen/blob/main/models/db/IMotion.php#L47 for a definition of the status IDs
+        status_title:
+          type: string
+          example: Modifizierte Übernahme
+    ProposedProcedure:
+      description: ...
+      properties:
+        proposed_procedure:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProposedProcedureOuterBlock'
+    ProposedProcedureOuterBlock:
+      description: An outer proposed procedure block
+      properties:
+        title:
+          type: string
+          example: "Abstimmung: Wohnen"
+        voting_blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProposedProcedureVotingBlock'
+    ProposedProcedureVotingBlock:
+      description: A voting block
+      properties:
+        id:
+          type: string
+          example: "19"
+          description: ID or null
+        title:
+          type: string
+          example: "Abstimmung: Wohnungstausch"
+          description: title or null
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProposedProcedureVotingItem'
+    ProposedProcedureVotingItem:
+      description: An individual item (motion or amendment) in a voting block
+      properties:
+        type:
+          type: string
+          example: "Amendment"
+          enum:
+            - Motion
+            - Amendment
+        id:
+          type: number
+          example: 23
+          description: the ID of the motion or amendment
+        prefix:
+          type: string
+          example: "W-01-035-3"
+        title_with_prefix:
+          type: string
+          example: "W-01-035-3: Recht auf Wohnen"
+        url_json:
+          type: string
+          example: https://test.antragsgruen.de/rest/consultation/123-motion/amendment/42
+        url_html:
+          type: string
+          example: https://test.antragsgruen.de/consultation/123-motion/42
+        initiators_html:
+          type: string
+          example: "Testuser 1"
+        procedure:
+          type: string
+          example: "<p>Abstimmung (Angenommen)</p><p class=\"explanation\">Das Thema der Abstimmung wird an mehreren Stellen im Antrag beantragt. Die Antragskommission schlägt vor, eine Abstimmung zwischen W-01-034-2 und W-01-035 durchzuführen. Wenn W-01-034-2 angenommen wird, sind W-01-433 und W-01-599 in den Beschlusstext übernommen. Wenn W-01-035 angenommen wird, werden die beiden Anträge W-01-433 und W-01-599 nicht in den Beschlusstext übernommen.</p>"
+    SpeakingList:
+      properties:
+        id:
+          type: number
+          example: 23
+        is_open:
+          type: boolean
+          example: true
+          description: if true, then users can apply for the speaking list
+        have_applied:
+          type: boolean
+          example: true
+          description: indicates if the current user has already applied for the speaking list.
+        requires_login:
+          type: boolean
+          example: true
+          description: indicates if users need to be logged in to apply
+        subqueues:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeakingListSubqueue'
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeakingListSlot'
+        current_time:
+          type: number
+          example: 1650106796832
+          description: unix timestamp in milliseconds of the time the request was served on server side. Can be used to calculate time offset of the browser.
+        speaking_time:
+          type: number
+          example: 300
+          description: if not null, then this indicates the time in seconds each speaker has
+    SpeakingListSubqueue:
+      properties:
+        id:
+          type: number
+          example: 23
+          description: can be null, if this is a default subqueue
+        name:
+          type: string
+          example: Member group 1
+          description: can be null, if this is a default subqueue
+        num_applied:
+          type: number
+          example: 4
+          description: number of users that have already applied for this subqueue
+        have_applied:
+          type: boolean
+          example: true
+          description: if the currently logged in user has applied for this subqueue
+        applied:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpeakingListApplicant'
+          description: list of users that have applied. Only provided if list the list is public.
+    SpeakingListApplicant:
+      properties:
+        id:
+          type: number
+          example: 23
+          description: application id
+        name:
+          type: string
+          example: Johanna Doe
+        user_id:
+          type: number
+          example: 23
+          description: user id
+        is_point_of_order:
+          type: boolean
+          description: Indicates if this is a point of order. If true, it should be higher prioritized
+        applied_at:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+    SpeakingListSlot:
+      properties:
+        id:
+          type: number
+          example: 23
+          description: can be null, if this is a default subqueue
+        subqueue:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 23
+              description: can be null, if this is a default subqueue
+            name:
+              type: string
+              example: Member group 1
+              description: can be null, if this is a default subqueue
+        name:
+          type: string
+          example: Johanna Doe
+        user_id:
+          type: number
+          example: 123
+        position:
+          type: number
+          example: 1
+        date_started:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+          description: When the speaking started. null if not yet started.
+        date_stopped:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+          description: When the speaking stopped. null if not yet stopped. If this is null and date_started is set, then the person is currently speaking.
+        date_applied:
+          type: string
+          example: "2015-03-30T03:27:20+02:00"
+          description: When the speaker applied. Always set.
+    ErrorNoPermission:
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: No permission to edit the agenda
+    ErrorNotFound:
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: Object not found
+    ErrorApiDisabled:
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: API disabled

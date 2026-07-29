@@ -1,0 +1,1305 @@
+@charset "UTF-8";
+
+@import "variables";
+
+.motionTextFormattings {
+  position: relative;
+  margin-left: 0;
+  text-rendering: optimizeLegibility;
+  font-size: $motionStdFontSize;
+  hyphens: auto;
+
+  span.underline {
+    border-bottom: solid 1px black;
+  }
+
+  span.strike {
+    text-decoration: line-through;
+  }
+
+  span.subscript {
+    // @TODO
+  }
+
+  span.superscript {
+    // @TODO
+  }
+
+  h1, .well & h1 {
+    background: none;
+    color: black;
+    text-transform: none;
+    font-weight: bold;
+    text-shadow: none;
+    padding: 0;
+    font-family: $bodyFont;
+    font-size: 1.5em;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.4em;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.3em;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  ol {
+    counter-reset: antragsgruen-counter;
+    list-style: none;
+
+    @for $i from 1 through 100 {
+      &[start="#{$i}"] {
+        counter-reset: antragsgruen-counter #{$i - 1};
+      }
+    }
+
+    > li {
+      counter-increment: antragsgruen-counter;
+      position: relative;
+
+      &::before {
+        content: counter(antragsgruen-counter) ".";
+        position: absolute;
+        left: -40px;
+        top: 0;
+      }
+
+      &[value]::before {
+        content: attr(value) ".";
+      }
+
+      @for $i from 1 through 100 {
+        &[value="#{$i}"] {
+          counter-reset: antragsgruen-counter #{$i - 1};
+        }
+      }
+      &[value="A"] { counter-reset: antragsgruen-counter 0; }
+      &[value="a"] { counter-reset: antragsgruen-counter 0; }
+      &[value="B"] { counter-reset: antragsgruen-counter 1; }
+      &[value="b"] { counter-reset: antragsgruen-counter 1; }
+      &[value="C"] { counter-reset: antragsgruen-counter 2; }
+      &[value="c"] { counter-reset: antragsgruen-counter 2; }
+      &[value="D"] { counter-reset: antragsgruen-counter 3; }
+      &[value="d"] { counter-reset: antragsgruen-counter 3; }
+      &[value="E"] { counter-reset: antragsgruen-counter 4; }
+      &[value="e"] { counter-reset: antragsgruen-counter 4; }
+      &[value="F"] { counter-reset: antragsgruen-counter 5; }
+      &[value="f"] { counter-reset: antragsgruen-counter 5; }
+      &[value="G"] { counter-reset: antragsgruen-counter 6; }
+      &[value="g"] { counter-reset: antragsgruen-counter 6; }
+      &[value="H"] { counter-reset: antragsgruen-counter 7; }
+      &[value="h"] { counter-reset: antragsgruen-counter 7; }
+      &[value="I"] { counter-reset: antragsgruen-counter 8; }
+      &[value="i"] { counter-reset: antragsgruen-counter 8; }
+      &[value="J"] { counter-reset: antragsgruen-counter 9; }
+      &[value="j"] { counter-reset: antragsgruen-counter 9; }
+      &[value="K"] { counter-reset: antragsgruen-counter 10; }
+      &[value="k"] { counter-reset: antragsgruen-counter 10; }
+      &[value="L"] { counter-reset: antragsgruen-counter 11; }
+      &[value="l"] { counter-reset: antragsgruen-counter 11; }
+      &[value="M"] { counter-reset: antragsgruen-counter 12; }
+      &[value="m"] { counter-reset: antragsgruen-counter 12; }
+      &[value="N"] { counter-reset: antragsgruen-counter 13; }
+      &[value="n"] { counter-reset: antragsgruen-counter 13; }
+      &[value="O"] { counter-reset: antragsgruen-counter 14; }
+      &[value="o"] { counter-reset: antragsgruen-counter 14; }
+      &[value="P"] { counter-reset: antragsgruen-counter 15; }
+      &[value="p"] { counter-reset: antragsgruen-counter 15; }
+      &[value="Q"] { counter-reset: antragsgruen-counter 16; }
+      &[value="q"] { counter-reset: antragsgruen-counter 16; }
+      &[value="R"] { counter-reset: antragsgruen-counter 17; }
+      &[value="r"] { counter-reset: antragsgruen-counter 17; }
+      &[value="S"] { counter-reset: antragsgruen-counter 18; }
+      &[value="s"] { counter-reset: antragsgruen-counter 18; }
+      &[value="T"] { counter-reset: antragsgruen-counter 19; }
+      &[value="t"] { counter-reset: antragsgruen-counter 19; }
+      &[value="U"] { counter-reset: antragsgruen-counter 20; }
+      &[value="u"] { counter-reset: antragsgruen-counter 20; }
+      &[value="V"] { counter-reset: antragsgruen-counter 21; }
+      &[value="v"] { counter-reset: antragsgruen-counter 21; }
+      &[value="W"] { counter-reset: antragsgruen-counter 22; }
+      &[value="w"] { counter-reset: antragsgruen-counter 22; }
+      &[value="X"] { counter-reset: antragsgruen-counter 23; }
+      &[value="x"] { counter-reset: antragsgruen-counter 23; }
+      &[value="Y"] { counter-reset: antragsgruen-counter 24; }
+      &[value="y"] { counter-reset: antragsgruen-counter 24; }
+      &[value="Z"] { counter-reset: antragsgruen-counter 25; }
+      &[value="z"] { counter-reset: antragsgruen-counter 25; }
+    }
+    &.decimalCircle {
+      > li {
+        &::before {
+          content: "(" counter(antragsgruen-counter) ")";
+        }
+
+        &[value]::before {
+          content: "(" attr(value) ")";
+        }
+      }
+    }
+    &.lowerAlpha {
+      > li {
+        &::before {
+          content: counter(antragsgruen-counter, lower-alpha) ".";
+        }
+
+        &[value]::before {
+          content: attr(value) ".";
+        }
+      }
+    }
+    &.upperAlpha {
+      > li {
+        &::before {
+          content: counter(antragsgruen-counter, upper-alpha) ".";
+        }
+
+        &[value]::before {
+          content: attr(value) ".";
+        }
+      }
+    }
+  }
+
+  .amendmentRef {
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+
+  &.fixedWidthFont {
+    font-family: $motionFixedFont;
+    //letter-spacing: -0.5px;
+    color: $motionFixedFontColor;
+    hyphens: none; // Otherwise, hovered inline amendments have different line breaks than the original motion
+  }
+
+  @media (min-width: $screenMinWith) {
+    .lineNumber {
+      position: relative;
+      left: $lineNumberOffset + -1 * $fixedWidthTextStdPadding;
+      width: 0;
+      display: inline-block;
+      float: left; // otherwise problems appear at li > p constructs
+    }
+  }
+  .lineNumber:after {
+    content: attr(data-line-number);
+    color: #C3C3C3;
+    font-size: $motionStdFontSize;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 799px) {
+    br {
+      display: none;
+    }
+    .lineNumber {
+      position: relative;
+      bottom: -3px;
+      left: -2px;
+    }
+    .lineNumber:first-of-type {
+      position: relative;
+      left: $lineNumberOffset - 5px + -1 * $fixedWidthTextStdPaddingSmall;
+      width: 0;
+      bottom: auto;
+      display: inline-block;
+      float: left; // otherwise problems appear at li > p constructs
+      z-index: -1; // Line number highlighting should be behind the text
+    }
+    .lineNumber:after {
+      font-size: $motionStdFontSize - 4;
+    }
+    .lineNumber:first-of-type:after {
+      font-size: $motionStdFontSize - 2;
+    }
+  }
+
+  @media (min-width: $screenMinWith) {
+    > ul, > ol {
+      padding-left: $fixedWidthTextListPadding;
+
+      .lineNumber {
+        left: $lineNumberOffset + -1 * ($fixedWidthTextListPadding + $fixedWidthTextStdPadding);
+      }
+
+      ul, ol {
+        padding-left: $fixedWidthTextListPadding;
+
+        .lineNumber {
+          left: $lineNumberOffset + -1 * (2 * $fixedWidthTextListPadding + $fixedWidthTextStdPadding);
+        }
+
+        ul, ol {
+          .lineNumber {
+            left: $lineNumberOffset + -1 * (3 * $fixedWidthTextListPadding + $fixedWidthTextStdPadding);
+          }
+
+          ul, ol {
+            .lineNumber {
+              left: $lineNumberOffset + -1 * (4 * $fixedWidthTextListPadding + $fixedWidthTextStdPadding);
+            }
+          }
+        }
+      }
+    }
+
+    .fourdigitsLineNumbers & {
+      .lineNumber {
+        left: $lineNumberOffset4 - 5px + -1 * $fixedWidthTextStdPadding;
+      }
+
+      > ul, > ol {
+        .lineNumber {
+          left: $lineNumberOffset4 - 5px + -1 * ($fixedWidthTextListPadding + $fixedWidthTextStdPadding);
+        }
+      }
+
+      > blockquote {
+        .lineNumber {
+          left: $lineNumberOffset4 - 5px + -1 * ($fixedWidthTextStdPadding + $fixedWidthTextQuotePadding +
+            $fixedWidthTextQuoteBorder + $fixedWidthTextQuoteMargin);
+        }
+      }
+    }
+
+    > blockquote {
+      @include motionParagraphBlockquote();
+      margin-left: $fixedWidthTextQuoteMargin;
+
+      .lineNumber {
+        left: $lineNumberOffset + -1 * ($fixedWidthTextStdPadding + $fixedWidthTextQuotePadding +
+            $fixedWidthTextQuoteBorder + $fixedWidthTextQuoteMargin);
+      }
+    }
+  }
+  @media screen and (max-width: 799px) {
+    > ul, > ol {
+      padding-left: $fixedWidthTextListPadding;
+
+      .lineNumber:first-of-type {
+        left: $lineNumberOffset - 5px + -1 * ($fixedWidthTextListPadding + $fixedWidthTextStdPaddingSmall);
+      }
+
+      ul, ol {
+        padding-left: 15px;
+
+        .lineNumber:first-of-type {
+          left: $lineNumberOffset - 5px + -1 * (2 * $fixedWidthTextListPadding + $fixedWidthTextStdPaddingSmall);
+        }
+
+        ul, ol {
+          .lineNumber:first-of-type {
+            left: $lineNumberOffset - 5px + -1 * (3 * $fixedWidthTextListPadding + $fixedWidthTextStdPaddingSmall);
+          }
+
+          ul, ol {
+            .lineNumber:first-of-type {
+              left: $lineNumberOffset - 5px + -1 * (4 * $fixedWidthTextListPadding + $fixedWidthTextStdPaddingSmall);
+            }
+          }
+        }
+      }
+    }
+
+    .fourdigitsLineNumbers & {
+      .lineNumber:first-of-type {
+        left: $lineNumberOffset4 - 5px + -1 * $fixedWidthTextListPadding;
+      }
+
+      > ul, > ol {
+        .lineNumber:first-of-type {
+          left: $lineNumberOffset4 - 5px + -1 * ($fixedWidthTextListPadding + $fixedWidthTextStdPaddingSmall);
+        }
+      }
+
+      > blockquote {
+        .lineNumber:first-of-type {
+          left: $lineNumberOffset4 - 5px + -1 * ($fixedWidthTextStdPaddingSmall + $fixedWidthTextQuotePadding +
+            $fixedWidthTextQuoteBorder + $fixedWidthTextQuoteMarginSmall);
+        }
+      }
+    }
+
+    > blockquote {
+      @include motionParagraphBlockquote();
+      margin-left: $fixedWidthTextQuoteMarginSmall;
+
+      .lineNumber:first-of-type {
+        left: $lineNumberOffset - 5px + -1 * ($fixedWidthTextStdPaddingSmall + $fixedWidthTextQuotePadding +
+            $fixedWidthTextQuoteBorder + $fixedWidthTextQuoteMarginSmall);
+      }
+    }
+  }
+
+  .lineNumber.highlighted:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -8px;
+    height: 1.5em;
+    margin-top: -1px;
+    width: 100vw;
+    max-width: $content-max-width;
+    z-index: 0;
+    background-color: rgba(255, 255, 0, 0);
+    transition: background-color 0.5s ease;
+  }
+
+  .lineNumber.highlighted-active:before {
+    background-color: rgba(255, 255, 0, 0.3);
+  }
+
+  &.smallFont {
+    font-size: 12px;
+  }
+}
+
+.motionTextHolder {
+  .well & {
+    padding-bottom: 22px;
+    > h3.green {
+      margin-bottom: 22px;
+    }
+  }
+
+  .stdPadding {
+    @media screen and (min-width: $screenMinWith) {
+      padding: 15px 10px 15px $fixedWidthTextStdPadding;
+    }
+    @media (max-width: $screenMinWith - 1) {
+      padding: 15px 10px 15px $fixedWidthTextStdPaddingSmall;
+    }
+  }
+
+  .amendmentTextModeSelector {
+    float: right;
+  }
+
+  .paragraph {
+    font-size: 14px;
+    clear: both;
+    position: relative;
+
+    &.smallFont {
+      font-size: 12px;
+    }
+
+    .text {
+      @media (min-width: $screenMinWith) {
+        padding: 15px $fixedWidthTextStdPadding 15px $fixedWidthTextStdPadding;
+      }
+      @media (max-width: $screenMinWith - 1) {
+        padding: 15px $fixedWidthTextStdPaddingSmall 15px $fixedWidthTextStdPaddingSmall;
+      }
+
+      &.collidingAmendment {
+        margin-top: -20px;
+
+        > h3 {
+          font-size: 1.2em;
+          margin-top: 0;
+        }
+      }
+    }
+
+    &.lineNumbers .text {
+      @media screen and (min-width: $screenMinWith) {
+        padding: 15px 10px 15px $fixedWidthTextStdPadding;
+      }
+      @media (max-width: $screenMinWith - 1) {
+        padding: 15px 10px 15px $fixedWidthTextStdPaddingSmall;
+      }
+    }
+
+    h4.lineSummary {
+      font-size: inherit;
+      font-weight: bold;
+      margin: 0;
+      .linkedMotion {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .textAmendment {
+    position: relative;
+    @media (min-width: $screenMinWith) {
+      width: $motionFixedWidth;
+    }
+
+    del, ul.deleted, ol.deleted, li.deleted, blockquote.deleted, pre.deleted {
+      color: #ff0000;
+      text-decoration: line-through;
+    }
+
+    ins, ul.inserted, ol.inserted, li.inserted, blockquote.inserted, pre.inserted {
+      text-decoration: underline;
+    }
+
+    .preamble {
+      position: absolute;
+      top: -($inlineAmendmentPreambleHeight - 10);
+      height: $inlineAmendmentPreambleHeight;
+      @media (min-width: $screenMinWith) {
+        width: 100%;
+      }
+      @media (max-width: $screenMinWith - 1) {
+        width: calc(100% - #{$fixedWidthTextStdPaddingSmall} - 10px);
+      }
+
+      > a {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        max-height: $inlineAmendmentPreambleHeight;
+        //padding-right: 50px; Should not overlap the bookmark links
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        color: $inlineAmendmentPreambleColor;
+
+        &:link, &:visited {
+          color: $inlineAmendmentPreambleColor;
+        }
+
+        h3 {
+          font-size: 14px;
+          display: inline-block;
+          margin: 0;
+          font-weight: bold;
+        }
+
+        .moreAffected {
+          font-style: italic;
+          font-size: 0.8em;
+          margin-top: -3px;
+          color: #bbccbb;
+        }
+      }
+
+      @media screen and (max-width: 799px) {
+        .amendment {
+          display: none;
+        }
+      }
+    }
+
+    .movedParagraphHint {
+      font-style: italic;
+      font-size: 0.8em;
+      margin-top: 3px;
+      color: #bbccbb;
+    }
+  }
+
+  .tabularData {
+    > tbody > tr:first-child {
+      > td, > th {
+        border-top: none;
+      }
+    }
+  }
+
+  .onlyOneSupporter {
+    list-style-type: none;
+    margin: 0;
+    @media screen and (min-width: $screenMinWith) {
+      padding: 15px 10px 15px $fixedWidthTextStdPadding;
+    }
+    @media (max-width: $screenMinWith - 1) {
+      padding: 15px 10px 15px $fixedWidthTextStdPaddingSmall;
+    }
+    > li {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .amendmentParaLink {
+    position: absolute;
+    display: none;
+    top: 50%;
+    right: 5px;
+    margin-top: -30px;
+    img {
+      width: 35px;
+    }
+  }
+  .paragraph:hover .amendmentParaLink {
+    display: block;
+  }
+  .paragraph.hover .amendmentParaLink { // Used for testing
+    display: block;
+  }
+}
+
+.bookmarks {
+  float: right;
+  width: 1px;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5px;
+
+  > li {
+    width: 1px;
+    height: 38px;
+    position: relative;
+    margin-bottom: 7px;
+    z-index: 1; // Amendment-Markers at the side of a motion should be above the sidebar in case of a collision
+
+    > a {
+      display: block;
+      position: absolute;
+      white-space: nowrap;
+      padding: 10px;
+      top: 0;
+      left: 2px;
+      color: $bookmarkAmendmentText;
+      min-width: 40px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      font-weight: bold;
+      @media screen and (max-width: 799px) {
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: -3px;
+          width: 3px;
+          height: 100%;
+        }
+
+        &:after {
+          content: " ";
+          position: absolute;
+          left: -2px;
+          top: 50%;
+          height: 0;
+          width: 0;
+          border-width: 2px;
+          margin-top: -2px;
+          border-style: solid;
+          border-color: rgba(255, 255, 255, 0);
+          border-left-color: #ffffff;
+        }
+      }
+    }
+
+    &.comment > a {
+      @include linear-gradient(90deg, $bookmarkCommentColor, lighten($bookmarkCommentColor, 3.5%));
+
+      &:before {
+        background: $bookmarkCommentColor;
+      }
+
+      &.active {
+        @include linear-gradient(90deg, darken($bookmarkCommentColor, 5.5%), darken($bookmarkCommentColor, 2.5%));
+
+        &:before {
+          background: darken($bookmarkCommentColor, 3.5%);
+        }
+      }
+
+      &.zero {
+        opacity: 0.30;
+      }
+
+      .count:after {
+        content: attr(data-count);
+        padding-left: 4px;
+      }
+    }
+
+    &.amendment > a {
+      @include linear-gradient(90deg, $bookmarkAmendmentBackground, lighten($bookmarkAmendmentBackground, 3.5%));
+
+      &:before {
+        background: $bookmarkAmendmentBackground;
+      }
+
+      &.active {
+        @include linear-gradient(90deg, darken($bookmarkAmendmentBackground, 3.5%), $bookmarkAmendmentBackground);
+
+        &:before {
+          background: darken($bookmarkAmendmentBackground, 3.5%);
+        }
+      }
+    }
+
+    .hider {
+      @include linear-gradient(90deg, rgb(180, 180, 180), rgb(220, 220, 220));
+    }
+  }
+}
+
+.commentScreeningQueue {
+  margin-left: 50px;
+  color: darkgray;
+}
+
+.motionTwoCols {
+  margin-top: 2px;
+  @media screen and (min-width: $screenMinWith) {
+    display: flex;
+    width: 100%;
+    .motionMainCol {
+      flex-basis: 66.6%;
+    }
+    .motionRightCol {
+      flex-basis: 33.4%;
+    }
+  }
+}
+
+.motionComment {
+  border: solid 1px $commentBorder;
+  background: $commentBackground;
+  border-radius: 3px;
+  margin: 15px 20px 30px;
+  padding: $commentPadding;
+
+  &.replyComment {
+    margin-top: -15px;
+  }
+
+  .commentHeader {
+    background: none;
+    color: darken($colorLinks, 5%);
+    font-family: $bodyFont;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 18px;
+    margin: 0;
+    text-transform: none;
+  }
+
+  .commentName {
+    @media (min-width: $screenMinWith) {
+      float: right;
+    }
+  }
+
+  .commentWriteHeader {
+    border-bottom: solid 1px $commentBackground;
+    font-size: 1.2em;
+  }
+
+  .date {
+    color: #757676;
+    float: right;
+    margin-left: 20px;
+  }
+
+  .commentBottom {
+    height: 23px;
+    position: relative;
+    margin: $commentPadding calc(-1 * $commentPadding) calc(-1 * $commentPadding) calc(-1 * $commentPadding);
+
+    .entry {
+      position: absolute;
+      bottom: -1px;
+      height: 24px;
+      font-size: 12px;
+      border-top: solid 1px $commentBorder;
+      text-align: center;
+      font-weight: normal;
+    }
+
+    .link {
+      left: -1px;
+      padding: 2px;
+      width: 24px;
+      border-right: solid 1px $commentBorder;
+      border-top-right-radius: 3px;
+    }
+
+    .replyButton {
+      right: -1px;
+      padding: 2px 5px;
+      border-left: solid 1px $commentBorder;
+      border-top-left-radius: 3px;
+    }
+
+    .delLink {
+      color: $colorDelLink;
+      left: 3px;
+      width: 24px;
+      border-right: solid 1px $commentBorder;
+      border-top-right-radius: 3px;
+
+      .link {
+        border-right: 0;
+        padding: 4px;
+      }
+    }
+
+    .delLink + .link {
+      border-top-right-radius: 0;
+    }
+  }
+
+  .delLink {
+    float: right;
+    margin-left: 20px;
+
+    a:link, a:visited {
+      color: #ccc;
+
+      &:hover, &:focus {
+        color: #bbb;
+      }
+    }
+  }
+
+  .screening {
+    > * {
+      display: inline-block;
+      width: 49%;
+      text-align: center;
+    }
+  }
+
+  > label {
+    display: block;
+    text-align: center;
+  }
+
+  &.form-horizontal .form-group {
+    margin-right: $commentPadding;
+    margin-left: $commentPadding;
+
+    > * {
+      padding-right: 0;
+    }
+  }
+
+  .commentNotifications {
+    padding: $commentPadding;
+    overflow: visible;
+
+    label {
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    select {
+      float: right;
+    }
+  }
+
+  .submitrow {
+    padding-top: $commentPadding;
+    text-align: center;
+  }
+}
+
+.motionCommentReplies {
+  @media screen and (min-width: 1000px) {
+    padding-left: 100px;
+  }
+
+  .motionComment {
+    margin-top: -20px;
+  }
+}
+
+.withdrawForm {
+  text-align: center;
+
+  .ask {
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+}
+
+.motionSupportFinishForm, .amendmentSupportFinishForm {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sectionType0 + .motionTextHolder {
+  // Don't let amendment markers be hidden behind the next section
+  clear: both;
+}
+
+.sectionType3 { // Images
+  padding: 10px;
+
+  img {
+    max-height: 200px;
+    max-width: 100%;
+  }
+}
+
+.motionRightCol {
+  padding-top: 0;
+  font-size: 14px;
+
+  .motionTextFormattings {
+    font-size: 14px;
+  }
+
+  > section {
+    padding: 0 30px 20px 0;
+  }
+}
+
+iframe.pdfViewer {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+.sectionType5 { // PDFs
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
+.sectionType7 { // PDFs
+  margin-left: -1px;
+  margin-right: -1px;
+
+  .videoHolder {
+    padding: 15px 50px 15px 50px;
+  }
+
+  .videoSizer {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+  }
+
+  iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border: none;
+  }
+}
+
+.sectionType8 { // Editorials / Progress reports
+  .editCaller {
+    float: right;
+    font-weight: normal;
+  }
+  .textHolder {
+    clear: both;
+  }
+  .toolbarBelowTitle {
+    margin-top: -22px; // Cancel margin from header
+  }
+  .editorialHeader {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 47px;
+    overflow: auto;
+  }
+  .metadataView {
+    vertical-align: middle;
+    font-style: italic;
+  }
+  .metadataEdit {
+    display: flex;
+    width: 100%;
+    label > * {
+      display: inline-block;
+      width: auto;
+    }
+    label {
+      margin: 0;
+      flex-grow: 1;
+      font-weight: normal;
+    }
+    label:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.gotoLineNumerPanel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  right: 0;
+  z-index: 10;
+  background: white;
+  border-top: solid 1px #ccc;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  display: none;
+  padding: 10px;
+
+  &.active {
+    display: block;
+  }
+
+  .lineNumberNotFound {
+    color: $errorColor;
+  }
+
+  .input-group {
+    max-width: 300px;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+#amendmentMergeForm {
+  #motionTitlePrefix, #motionVersion, .dropdown-toggle {
+    max-width: 230px;
+  }
+
+  .checkButtonRow {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .otherAmendmentStatus {
+    .row {
+      margin-bottom: 15px;
+    }
+
+    .by {
+      display: block;
+      font-size: 0.8em;
+    }
+
+    .amendmentAjaxTooltip {
+      float: right;
+      color: gray;
+      margin-right: -15px;
+      margin-top: 7px;
+    }
+  }
+
+  .affectedParagraphs {
+    .paragraph.originalVersion .modifiedVersion {
+      display: none;
+    }
+
+    .paragraph.modifiedVersion .originalVersion {
+      display: none;
+    }
+
+    .paragraph.changed .motionTextHolder {
+      display: none;
+    }
+
+    .paragraph.unchanged .modifyText {
+      display: none;
+    }
+  }
+
+  .modifiedText {
+    display: none;
+  }
+
+  .modifyText {
+    margin-top: 20px;
+  }
+
+  .selectorToolbar {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+
+    label {
+      margin-right: 20px;
+      font-weight: normal;
+    }
+
+    .modifySelector {
+      text-align: right;
+      flex: 1;
+    }
+
+    .versionSelector {
+      flex: 1;
+    }
+  }
+
+  .save-row {
+    text-align: center;
+  }
+
+  .saveholder {
+    .checkAmendmentCollisions {
+      display: none;
+    }
+  }
+}
+
+.amendmentCollisionsHolder {
+  .amendmentBy {
+    color: gray;
+  }
+
+  .amendmentOverrideBlock {
+    background-color: #f5f5f5;
+    margin: 15px -10px;
+    padding: 10px;
+    border: solid 1px #ddd;
+    border-radius: 4px;
+
+    > h3 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+
+    > textarea {
+      display: none;
+    }
+  }
+}
+
+.motionData {
+  @media (min-width: $screenMinWith) {
+    .translateWidget {
+      float: right;
+      margin-bottom: -25px; // moves the consultation from the table up
+    }
+  }
+
+  .privateNotes {
+    th {
+      padding-top: 25px;
+    }
+
+    td {
+      padding-top: 20px;
+    }
+
+    blockquote {
+      margin-left: 0;
+      cursor: pointer;
+      font-style: italic;
+      color: #666;
+    }
+
+    textarea {
+      line-height: 1.1;
+      height: 50px;
+      width: 100%;
+      @media (min-width: $screenMinWith) {
+        width: calc(100% - 110px);
+      }
+    }
+
+    .btn {
+      margin-top: 2px;
+      margin-left: 5px;
+    }
+
+    .btnEdit {
+      margin-left: -30px;
+      margin-top: -1px;
+      float: left;
+    }
+  }
+}
+
+.privateNoteOpener {
+  margin-top: -20px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  width: 30%;
+
+  .btn {
+    font-weight: normal;
+  }
+
+  & + .proposedChangesOpener .btn {
+    margin-top: -30px;
+  }
+}
+
+
+.privateParagraphNoteHolder {
+  font-family: $bodyFont;
+
+  .privateParagraphNoteOpener {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    opacity: 0.5;
+
+    .btn {
+      font-weight: normal;
+    }
+  }
+
+  label {
+    width: 100%;
+    @media (min-width: $screenMinWith) {
+      width: calc(100% - 110px);
+    }
+  }
+
+  textarea.form-control {
+    line-height: 1.1;
+    height: 50px;
+    width: 100%;
+  }
+
+  .btn {
+    margin-top: 2px;
+    margin-left: 0;
+  }
+
+  .btnEdit {
+    margin-left: -30px;
+    margin-top: -1px;
+    float: left;
+  }
+
+  blockquote {
+    color: #666;
+    font-style: italic;
+    cursor: pointer;
+  }
+}
+
+ul + .privateParagraphNoteHolder, ol + .privateParagraphNoteHolder {
+  .privateParagraphNoteOpener {
+    left: 85px;
+  }
+
+  blockquote {
+    margin-left: 45px;
+  }
+
+  form {
+    margin-left: 40px;
+  }
+}
+
+blockquote + .privateParagraphNoteHolder {
+  .privateParagraphNoteOpener {
+    left: 100px;
+  }
+
+  blockquote {
+    margin-left: 60px;
+  }
+
+  form {
+    margin-left: 55px;
+  }
+}
+
+
+.motionChangeView {
+  .notDisplayable {
+    color: $errorColor;
+  }
+
+  .noChanges {
+    color: gray;
+  }
+
+  .motionDataTable {
+    margin-bottom: 25px;
+  }
+}
+
+.motionSupportForm {
+  .supportQuestion {
+    margin-top: 10px;
+  }
+
+  .supportBlock {
+    display: flex;
+    flex-direction: row;
+
+    .colName, .colGender, .colOrga {
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .colSubmit {
+      flex: 0;
+    }
+
+    > * {
+      padding: 0 10px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .nonPublicBlock label {
+    margin-top: 10px;
+    font-weight: normal;
+  }
+
+  .loggedOutWarning {
+    font-size: 0.8em;
+    margin-top: 6px;
+    padding: 0 15px;
+  }
+}
+
+.likes, .supporters {
+  .expandableList {
+    .btnShowAll {
+      padding: 0;
+      margin-left: 10px;
+      font-weight: normal;
+    }
+    .halfVisible {
+      opacity: 0.5;
+    }
+  }
+
+  .nonPublic {
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 0.8em;
+    font-style: italic;
+  }
+}
+
+.likeDislikeHolder {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .likeNameHolder {
+    display: inline-block;
+    max-width: 250px;
+    vertical-align: top;
+    margin-right: 20px;
+    @media screen and (max-width: 650px) {
+      display: block;
+    }
+  }
+
+  .btn {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,51 @@
+$screen-lg-min: 10000px !default; // deaktivieren
+$container-md: 1024px !default;
+$container-desktop: 1024px !default;
+$grid-float-breakpoint: 992px !default; // $screen-md-min;
+$zindex-popover: 11000 !default;
+$link-color: $colorLinks !default;
+$link-hover-color: lighten(darken($colorLinks, 5%), 15%) !default;
+$link-hover-decoration: $linkTextDecoration !default;
+$icon-font-path: "../fonts/" !default;
+
+// Core variables and mixins
+@import "bootstrap-3.4.3-sass/bootstrap/variables";
+@import "bootstrap-3.4.3-sass/bootstrap/mixins";
+
+// Reset and dependencies
+@import "bootstrap-3.4.3-sass/bootstrap/normalize";
+@import "bootstrap-3.4.3-sass/bootstrap/print";
+@import "bootstrap-3.4.3-sass/bootstrap/glyphicons";
+
+// Core CSS
+@import "bootstrap-3.4.3-sass/bootstrap/scaffolding";
+@import "bootstrap-3.4.3-sass/bootstrap/type";
+@import "bootstrap-3.4.3-sass/bootstrap/code";
+@import "bootstrap-3.4.3-sass/bootstrap/tables";
+@import "bootstrap-3.4.3-sass/bootstrap/forms";
+@import "bootstrap-3.4.3-sass/bootstrap/buttons";
+@import "bootstrap-3.4.3-sass/bootstrap/button-groups";
+
+// Components
+@import "bootstrap-3.4.3-sass/bootstrap/component-animations";
+@import "bootstrap-3.4.3-sass/bootstrap/input-groups";
+@import "bootstrap-3.4.3-sass/bootstrap/dropdowns";
+@import "bootstrap-3.4.3-sass/bootstrap/navs";
+@import "bootstrap-3.4.3-sass/bootstrap/navbar";
+@import "bootstrap-3.4.3-sass/bootstrap/alerts";
+@import "bootstrap-3.4.3-sass/bootstrap/list-group";
+@import "bootstrap-3.4.3-sass/bootstrap/pagination";
+@import "bootstrap-3.4.3-sass/bootstrap/breadcrumbs";
+@import "bootstrap-3.4.3-sass/bootstrap/wells";
+@import "bootstrap-3.4.3-sass/bootstrap/close";
+
+// Components w/ JavaScript
+@import "bootstrap-3.4.3-sass/bootstrap/modals";
+@import "bootstrap-3.4.3-sass/bootstrap/popovers";
+@import "bootstrap-3.4.3-sass/bootstrap/tooltip";
+
+// Utility classes
+@import "bootstrap-3.4.3-sass/bootstrap/utilities";
+@import "bootstrap-3.4.3-sass/bootstrap/responsive-utilities";
+
+@import "mixins";

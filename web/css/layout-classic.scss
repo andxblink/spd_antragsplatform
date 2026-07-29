@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+@import "variables";
+
+$OpenSansPath: "../fonts/OpenSans/fonts";
+@import "../fonts/OpenSans/open-sans.scss";
+$veraSansPath: "../fonts/BitstreamVeraSansMono";
+@import "../fonts/BitstreamVeraSansMono/verasans";
+
+$screen-md-min: ($container-md + 90px) !default; // Extra spacing for the "create motion button"
+$mainContentWidth: $container-md - $sidebarWidth !default;
+$content-max-width: $mainContentWidth - 2px !default;
+$grid-float-breakpoint: $screen-md-min !default;
+
+$colorLinksLight: #6d7e00;
+$colorLinks: #6d7e00;
+$colorLinksFooter: darken($colorLinks, 5%);
+$linkTextDecoration: none;
+$colorDelLink: #FF7777;
+$colorMagenta: rgb(212, 0, 116);
+$brand-primary: $colorMagenta;
+$text-color: rgb(72, 70, 73);
+$btn-success-bg: #2c882c;
+$label-success-bg: $btn-success-bg;
+
+$table-border-color: $colorGreenLight;
+$headingFont: "Open Sans", sans-serif;
+$headingPrimaryText: rgb(255, 255, 255);
+$headingPrimaryBackground: rgb(40, 95, 25);
+$headingSecondaryText: #444;
+$headingSecondaryBackground: rgb(182, 209, 8);
+$headingTertiaryText: black;
+$headingTertiaryBackground: rgb(27, 74, 251);
+
+$menuFont: "Open Sans", sans-serif;
+$menuLink: #4b7000;
+$menuActive: rgb(100, 100, 100);
+
+$sidebarBackground: $colorMagenta;
+$sidebarActionFont: "Open Sans", sans-serif;
+
+$bookmarkAmendmentBackground: $colorGreenLight;
+$bookmarkCommentColor: $colorMagenta;
+
+$bodyFont: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$deadlineCircleFont: "Open Sans", sans-serif;
+$buttonFont: "Open Sans", sans-serif;
+$motionFixedFont: 'VeraMono', Consolas, Courier, sans-serif;
+$motionFixedFontColor: #222;
+$motionFixedWidth: 740px;
+$motionStdFontSize: 14px;
+$inlineAmendmentPreambleHeight: 35px;
+$inlineAmendmentPreambleColor: $colorMagenta;
+$createMotionBtnColor: $colorMagenta;
+
+@import "bootstrap";
+@import "fontello";
+@import "wizard";
+@import "helpers";
+@import "elements";
+@import "bootstrap_overwrites";
+@import "base_layout";
+@import "contentpage";
+@import "consultation_motion_list";
+@import "speech_lists";
+@import "voting";
+@import "motions";
+@import "proposed_procedure";
+@import "styles";
+@import "merging";
+@import "sidebar";
+@import "projector";
+@import "user_pages";
+
+html {
+  background: url("../img/wallpaper.jpg") repeat scroll 0 0 transparent;
+}
+
+body {
+  background: url("../img/backgroundGradient.png") repeat-x scroll 0 0 transparent;
+}
+
+.logoImg {
+  display: block;
+  width: 377px;
+  height: 55px;
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  @media screen and (max-width: 479px) {
+    width: 300px;
+    height: 44px;
+    background-size: 300px 44px;
+  }
+}

@@ -1,0 +1,41 @@
+# php -d memory_limit=1G vendor/bin/phpstan.phar analyse --level 7 --generate-baseline
+# php -d memory_limit=1G vendor/bin/phpstan.phar analyse --level 7
+# includes:
+#  - phpstan-baseline.neon
+
+parameters:
+    level: 7
+    reportUnmatchedIgnoredErrors: false
+    tipsOfTheDay: false
+    ignoreErrors:
+      - identifier: missingType.iterableValue # Issues because Yii's ActiveRecords are recognized as Iterables
+      # Generic SSO plugin uses optional dependencies (league/oauth2-client, simplesamlphp/simplesamlphp)
+      -
+          message: '#(has unknown class|on an unknown class|Instantiated class|has invalid (return |parameter )?type|Cannot import type alias) (League\\OAuth2\\Client|SimpleSAML)#'
+          path: plugins/generic_sso/*
+      # Yii framework generic type parameter for web application context
+      -
+          message: '#PHPDoc tag @var for variable \$app contains generic class yii\\web\\Application but does not specify its types#'
+          path: plugins/generic_sso/*
+    scanDirectories:
+      - vendor
+    excludePaths:
+      # Has too many symbols that are not installed by default, and not worth installing them just for this file
+      - components/OpenTelemetryLogTarget.php
+    scanFiles:
+      - views/motion/LayoutHelper.php
+      - views/amendment/LayoutHelper.php
+      - views/speech/LayoutHelper.php
+      - views/consultation/LayoutHelper.php
+      - config/defines.php
+      - assets/phpstan-helper.php
+    paths:
+      - models
+      - controllers
+      - components
+      - commands
+      - plugins
+      - views/pdfLayouts
+
+includes:
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon

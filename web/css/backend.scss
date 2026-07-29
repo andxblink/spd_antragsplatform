@@ -1,0 +1,2102 @@
+@charset "UTF-8";
+@import "variables";
+@import "bootstrap-3.4.3-sass/bootstrap/variables";
+@import "bootstrap-3.4.3-sass/bootstrap/glyphicons";
+@import "bootstrap-3.4.3-sass/bootstrap/mixins";
+@import "mixins";
+
+.tooltip-inner {
+    max-width: 100% !important;
+}
+
+.adminForm {
+  label {
+    font-weight: normal;
+  }
+
+  .content {
+    overflow: visible;
+  }
+
+  .adminCard {
+    .removeAdmin {
+      float: right;
+    }
+
+    label {
+      display: inline-block;
+      margin-right: 20px;
+    }
+  }
+
+  .conPrefixHide {
+    margin-left: 20px;
+    display: block;
+  }
+
+  .selectRow {
+    legend {
+      font-weight: bold;
+    }
+  }
+}
+
+#tagsEditForm {
+  .tagTypeSelector {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .editList {
+    width: 100%;
+    @media screen and (min-width: $screenMinWith) {
+      width: 50%;
+    }
+
+    li {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .drag-handle {
+      cursor: move;
+      flex-basis: 80px;
+    }
+
+    .drag-handle {
+      cursor: move;
+      flex-basis: 22px;
+      font-size: 18px;
+      padding-top: 2px;
+      text-align: center;
+      margin-right: 10px;
+    }
+
+    .tagTitle {
+      flex-grow: 1;
+    }
+  }
+
+  .adderRow {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    @media screen and (min-width: $screenMinWith) {
+      width: 50%;
+    }
+  }
+  .tagAdderBtn {
+    font-weight: normal;
+    font-size: 0.9em;
+  }
+}
+
+.siteaccAdminsForm {
+  .ppReplyToOpener {
+    padding: 0 5px;
+    font-weight: normal;
+  }
+}
+
+.consultationCreateForm {
+  label {
+    display: block;
+    font-weight: normal;
+  }
+}
+
+// Motion protocols
+.contentProtocolCaller {
+  text-align: right;
+
+  &.explicitlyOpened, &.hasData, &.hasVotingStatus {
+    display: none;
+  }
+}
+.protocolHolder {
+  display: none;
+
+  &.explicitlyOpened {
+    display: block;
+  }
+
+  &.hasData {
+    display: block;
+
+    .protocolCloser {
+      display: none;
+    }
+  }
+  .protocolCloser.btn-link {
+    color: #555;
+    float: right;
+    padding: 0;
+    margin-top: -2px;
+  }
+
+  label {
+    font-weight: normal;
+    margin-right: 20px;
+  }
+}
+
+// Motion / Amendment Votings
+.contentVotingResultCaller {
+  text-align: right;
+
+  &.explicitlyOpened, &.hasData, &.hasVotingStatus {
+    display: none;
+  }
+}
+.votingDataHolder {
+  display: none;
+  &.explicitlyOpened {
+    display: block;
+  }
+  &.hasData, &.hasVotingStatus {
+    display: block;
+    .votingDataCloser {
+      display: none;
+    }
+  }
+  .votingDataCloser.btn-link {
+    color: #555;
+    float: right;
+    padding: 0;
+    margin-top: -2px;
+  }
+
+  .votingResult {
+    label {
+      padding-top: 7px;
+      margin-right: 15px;
+      font-weight: normal;
+    }
+  }
+
+  .votingEditLinkHolder {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  .contentVotingResult {
+    margin-top: 12px;
+  }
+}
+
+legend, label.legend {
+  display: block;
+  border: none;
+  color: rgb(40, 95, 25);
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 18px;
+  margin: 0 0 5px 0;
+}
+
+label.legend {
+  margin-top: 15px;
+}
+
+.form-horizontal .text_full_width .controls {
+  margin: 0;
+}
+
+.control-group {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.control-label {
+  float: left;
+  text-align: right;
+  padding-top: 5px;
+}
+
+.adminIndex {
+  h3 {
+    font-size: 18px;
+  }
+
+  .adminMenuList > li {
+    font-weight: bold;
+    margin-top: 20px;
+
+    &.secondary {
+      font-weight: normal;
+    }
+
+    li {
+      margin-top: 10px;
+    }
+  }
+
+  .motionTypeCreate {
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .delSiteCaller {
+    text-align: right;
+
+    button {
+      color: $colorDelLink;
+    }
+  }
+
+  .adminIndexSecondary {
+    padding-bottom: 10px;
+  }
+}
+
+@media (min-width: $screenMinWith) {
+  .adminIndexHolder {
+    display: flex;
+    flex-direction: row;
+
+    > *:first-child {
+      flex: 0.7;
+    }
+
+    > *:last-child {
+      flex: 0.3;
+    }
+
+    .adminIndexSecondary {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: $screenMinWith - 1) {
+  .adminIndexSecondary {
+    margin-top: 50px;
+  }
+}
+
+.adminTodo {
+  ul {
+    font-size: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding-bottom: 15px;
+
+      .action {
+        font-size: 0.8em;
+      }
+
+      .description {
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  .motionListLink {
+    text-align: right;
+  }
+}
+
+#consultationsList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  > li {
+    position: relative;
+    margin: 10px 0 30px;
+    padding: 10px;
+    overflow: auto;
+    border: solid 1px #afa;
+    border-radius: 4px;
+    background-color: #f4fFf4;
+
+    h3 {
+      margin: 0;
+      margin-bottom: 5px;
+      font-size: 1.2em;
+    }
+
+    .stdbox {
+      float: right;
+    }
+
+    .delbox {
+      color: red;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    @media (hover: hover) {
+      .delbox {
+        opacity: 0;
+      }
+
+      &:hover, &:focus-within {
+        .delbox {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+#consultationAppearanceForm {
+  .logoRow {
+    .logoPreview img {
+      max-width: 100%;
+    }
+
+    .image-chooser-dd {
+      text-align: right;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      display: flex;
+      width: 100%;
+      > .logoRowTitle {
+        flex-basis: 20%;
+      }
+      .logoPreview {
+        flex-basis: 20%;
+      }
+      .imageChooser {
+        flex-basis: 60%;
+      }
+    }
+  }
+
+  .selectRow {
+    margin-top: 10px;
+
+    label {
+      display: block;
+    }
+
+    .selectHolder {
+      max-width: 400px;
+    }
+  }
+
+  .translationService {
+    .services {
+      padding-left: 20px;
+      label {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .apiBaseUrl {
+    padding-left: 20px;
+  }
+
+  .speechLists {
+    .quotas {
+      padding-left: 20px;
+      label {
+        display: block;
+      }
+    }
+    .quotaList {
+      .quotaName {
+        margin-left: 20px;
+        max-width: 250px;
+      }
+    }
+    .quotaSelector {
+      vertical-align: top;
+    }
+  }
+
+  .showResolutionsSeparateHolder {
+    padding-left: 20px;
+    margin-bottom: 15px;
+    label {
+      display: block;
+    }
+  }
+}
+
+#consultationSettingsForm {
+  .pillbox-add-item {
+    min-width: 130px;
+  }
+
+  .loginMethods {
+    margin-top: 20px;
+
+    div.checkbox {
+      margin-left: 15px;
+    }
+  }
+
+  .conpw {
+    .setPasswordHolder {
+      padding: 10px 20px;
+      display: none;
+    }
+
+    .setNewPassword {
+      display: none;
+    }
+
+    &.checked.hasPassword {
+      .setNewPassword {
+        display: inline;
+      }
+    }
+
+    &.checked.hasPassword.changePwd {
+      .setNewPassword {
+        display: none;
+      }
+    }
+
+    &.checked.noPassword, &.checked.hasPassword.changePwd {
+      .setPasswordHolder {
+        display: block;
+      }
+    }
+
+    @media (min-width: $screenMinWith) {
+      .setPasswordHolder input[type=password] {
+        width: 40%;
+      }
+    }
+
+    label.otherConsultations:first-of-type {
+      padding-left: 0;
+    }
+  }
+}
+
+.imageChooser {
+  text-align: right;
+
+  .imageChooserDd {
+    display: inline-block;
+
+    button {
+      font-weight: normal;
+    }
+
+    .dropdown-menu {
+      width: 300px;
+      @media screen and (min-width: 600px) {
+        width: 450px;
+      }
+      @media screen and (min-width: $screenMinWith) {
+        width: 600px;
+      }
+    }
+
+    ul {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      list-style: none;
+
+      li {
+        flex: 1;
+        flex-basis: 150px;
+        height: 150px;
+        line-height: 150px;
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      img {
+        max-width: 140px;
+        max-height: 140px;
+      }
+    }
+
+    .imageEditLink {
+      margin-right: 10px;
+    }
+  }
+}
+
+.uploadedFilesManage {
+  .files {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+
+    > li {
+      display: inline-block;
+      width: 150px;
+      height: 170px;
+      vertical-align: top;
+      text-align: center;
+
+      * {
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      > div {
+        display: block;
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+      }
+
+      img {
+        display: inline-block;
+        max-width: 150px;
+        max-height: 150px;
+      }
+
+      form {
+        display: block;
+        height: 20px;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .msgSuccess {
+    text-align: center;
+    padding: 20px;
+    color: green;
+    font-weight: bold;
+  }
+
+  .msgError {
+    text-align: center;
+    padding: 20px;
+    color: red;
+    font-weight: bold;
+  }
+
+  .noImages {
+    text-align: center;
+    padding: 20px;
+    color: grey;
+    font-weight: bold;
+    font-style: italic;
+  }
+}
+
+
+.thumbnailedLayoutSelector {
+  padding-left: 5px !important; // cancels bootstrap padding
+
+  @include outlineOnFocusWithinNoBorder();
+
+  .layout {
+    height: 150px;
+    width: 200px;
+    line-height: 150px;
+    margin: 10px;
+    cursor: pointer;
+
+    display: inline-block;
+    vertical-align: bottom;
+
+    input {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      pointer-events: none;
+    }
+
+    span {
+      border: solid 1px lightgrey;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      line-height: 0;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    input:checked + span {
+      border: solid 1px green;
+      box-shadow: 0 0 10px rgba(0, 100, 0, 0.5);
+    }
+
+    .placeholder {
+      height: 150px;
+      width: 200px;
+      display: inline-block;
+      line-height: 150px;
+      vertical-align: middle;
+      text-align: center;
+      font-style: italic;
+    }
+
+    img {
+      max-height: 150px;
+      max-width: 200px;
+      display: inline-block;
+    }
+  }
+
+  & + .submitRow {
+    margin-top: 70px;
+    margin-bottom: 50px;
+  }
+}
+
+.customThemeSelector {
+  margin-top: 20px;
+
+  .editThemeLink {
+    display: block;
+    margin-left: 10px;
+  }
+}
+
+.consultationCreateForm {
+  .fakeUrl {
+    input.form-control {
+      display: inline-block;
+      width: 130px;
+    }
+  }
+
+  .settingsTypeLabel {
+    font-weight: normal;
+  }
+
+  #SiteCreateWizard {
+    display: none;
+  }
+}
+
+#sectionsList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  > li {
+    margin: 10px 0 30px;
+    padding: 0;
+    overflow: auto;
+    &.choice {
+      overflow: visible; // For the drop-down
+    }
+    border: solid 1px #afa;
+    border-radius: 4px;
+    background-color: #c0ffc0;
+
+    > .sectionContent {
+      margin-left: 50px;
+      border-left: 1px solid #afa;
+      background-color: #f4fFf4;
+
+      label {
+        font-weight: normal;
+      }
+    }
+
+    .sectionTitle {
+      width: 250px;
+    }
+
+    > .drag-handle {
+      font-size: 30px;
+      float: left;
+      display: block;
+      font-weight: bold;
+      cursor: move;
+      padding: 0 10px 10px;
+    }
+
+    &.title, &.image, &.pdfAlternative {
+      .drag-handle {
+        margin-top: 33px;
+      }
+    }
+
+    &.textSimple, &.textHtml {
+      .drag-handle {
+        margin-top: 55px;
+      }
+    }
+
+    .sectionType {
+      display: inline-block;
+      width: 190px;
+      vertical-align: top;
+      margin-right: 16px;
+    }
+
+    .toprow {
+      padding: 10px 10px 0;
+      border-bottom: 1px solid #afa;
+
+      .remover {
+        font-size: 20px;
+        float: right;
+        color: red;
+        opacity: 0.4;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .bottomrow {
+      display: table;
+      table-layout: fixed;
+      height: 57px;
+    }
+
+    .explanationRow {
+      padding: 0 10px 10px 10px;
+    }
+
+    .optionsCol {
+      > label {
+        display: block;
+      }
+    }
+
+    .leftCol, .optionsCol, .commAmendCol {
+      display: table-cell;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    .leftCol, .optionsCol {
+      width: 210px;
+    }
+
+    .commAmendCol {
+      width: 220px;
+    }
+
+    .commAmendCol, .optionsCol {
+      border-left: 1px solid #afa;
+    }
+
+
+    .imageMaxSize {
+      display: none;
+      margin-bottom: 10px;
+
+      .form-control {
+        display: inline-block;
+        width: 75px;
+      }
+    }
+
+    .choicesRow {
+      display: none;
+      padding: 0 10px 10px 10px;
+    }
+    .choiceType {
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    .showInHtml {
+      display: none;
+    }
+
+    .commentRow {
+      margin-bottom: 10px;
+    }
+
+    .commAmendCol {
+      label {
+        margin-bottom: 0;
+      }
+    }
+
+    .tabularDataRow {
+      display: none;
+      border-top: solid 1px #afa;
+      padding: 10px;
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+          margin: 0;
+          padding: 5px;
+
+          > .drag-data-handle {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: move;
+            padding: 0 10px 10px;
+          }
+
+          .form-control {
+            display: inline-block;
+            width: 200px;
+          }
+        }
+      }
+
+      .addRow {
+        padding-left: 40px;
+        margin-top: 6px;
+        display: inline-block;
+        font-weight: normal;
+      }
+      .delRow {
+        font-weight: normal;
+      }
+
+      .selectOptions {
+        display: flex;
+        flex-direction: row;
+        .description {
+          flex-basis: 235px;
+          flex-grow: 0;
+          padding-left: 40px;
+        }
+        .selectize-wrapper {
+          flex-grow: 1;
+        }
+      }
+    }
+
+    .maxLenInput {
+      padding-left: 15px;
+
+      input {
+        width: 60px;
+      }
+    }
+
+    .maxLenSoft {
+      padding-left: 15px;
+      font-size: 12px;
+    }
+
+    .printTitleSection {
+      margin-top: 5px;
+    }
+
+    &.no-maxLenSet {
+      .maxLenInput, .maxLenSoft {
+        display: none;
+      }
+    }
+
+    &.image {
+      .imageMaxSize {
+        display: block;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .isRtlLabel, .maxLength {
+        display: none;
+      }
+    }
+
+    &.choice {
+      .choicesRow, .choiceType {
+        display: block;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .isRtlLabel, .maxLength {
+        display: none;
+      }
+    }
+
+    &.title {
+      .lineNumbersLabel, .fixedWidthLabel {
+        display: none;
+      }
+
+      .showInHtml {
+        display: block;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .positionRow {
+        display: none;
+      }
+
+      .printTitleSection {
+        display: none;
+      }
+    }
+
+    &.textHtml {
+      .lineNumbersLabel, .fixedWidthLabel {
+        display: none;
+      }
+
+      .commentParagraph {
+        display: none;
+      }
+    }
+
+    &.textEditorial {
+      .lineNumbersLabel, .fixedWidthLabel {
+        display: none;
+      }
+
+      .commentParagraph {
+        display: none;
+      }
+
+      .amendmentRow {
+        display: none;
+      }
+      .commentRow {
+        display: none;
+      }
+    }
+
+    &.tabularData {
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .maxLength {
+        display: none;
+      }
+
+      .tabularDataRow {
+        display: block;
+      }
+    }
+
+    &.pdfAlternative {
+      .amendmentRow {
+        display: none;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .isRtlLabel, .maxLength {
+        display: none;
+      }
+
+      .positionRow {
+        display: none;
+      }
+
+      .printTitleSection {
+        display: none;
+      }
+
+      .showInHtml {
+        display: block;
+      }
+
+      .maxLenInput, .maxLenSoft {
+        display: none;
+      }
+    }
+
+    &.pdfAttachment {
+      .amendmentRow {
+        display: none;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .isRtlLabel, .maxLength {
+        display: none;
+      }
+
+      .maxLenInput, .maxLenSoft {
+        display: none;
+      }
+    }
+
+    &.videoEmbed {
+      .amendmentRow {
+        display: none;
+      }
+
+      .commentRow {
+        display: none;
+      }
+
+      .lineNumbersLabel, .fixedWidthLabel, .isRtlLabel, .maxLength {
+        display: none;
+      }
+
+      .maxLenInput, .maxLenSoft {
+        display: none;
+      }
+    }
+  }
+}
+
+.motionEditForm {
+  .statusColTitle {
+    label {
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+  }
+  .statusHelpLink {
+    font-weight: normal;
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: -3px;
+  }
+  .control-label {
+    font-weight: bold;
+  }
+  .tagList, .preventFunctionality, .defaultViewMode {
+    label {
+      font-weight: normal;
+      margin-top: 5px;
+      margin-right: 15px;
+    }
+  }
+}
+
+#motionUpdateForm {
+  .urlSlugHolder .shower {
+    margin-top: 7px;
+    button {
+      padding: 0;
+      font-weight: normal;
+    }
+  }
+  #motionTextEditCaller {
+    text-align: center;
+  }
+  .checkButtonRow {
+    text-align: center;
+  }
+
+  .saveholder {
+    .checkAmendmentCollisions {
+      display: none;
+    }
+  }
+}
+
+#amendmentUpdateForm {
+  .control-label {
+    font-weight: bold;
+  }
+  .motionEditLinkHolder {
+    padding-top: 12px;
+  }
+  #amendmentTextEditCaller {
+    text-align: center;
+  }
+}
+
+.adminMoveForm {
+  .checkboxSubtitle {
+    font-size: 0.8em;
+    font-weight: normal;
+    padding-left: 17px;
+  }
+
+  .prefixAlreadyTaken {
+    color: red;
+    font-weight: bold;
+  }
+
+  label {
+    display: block;
+  }
+}
+
+.adminTypeForm {
+  .statuteCreateLnk {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .submitRow {
+    text-align: center;
+  }
+
+  .control-label {
+    font-weight: bold;
+  }
+
+  input[type=checkbox] {
+    margin-right: 4px;
+  }
+
+  .contactDetails {
+    label {
+      font-weight: normal;
+      margin-right: 20px;
+    }
+  }
+
+  label.initiatorSetPermissions {
+    margin: 0;
+    float: right;
+
+    .btn {
+      font-weight: normal;
+      padding: 0;
+      font-size: 0.8em;
+    }
+
+    .active {
+      display: none;
+    }
+    &:has(input:checked) {
+      .active {
+        display: inline;
+      }
+      .inactive {
+        display: none;
+      }
+    }
+  }
+
+  .initiatorsCanMergeRow {
+    label {
+      display: block;
+      font-weight: normal;
+      cursor: pointer;
+    }
+  }
+
+  .deadlineLabel {
+    font-weight: bold;
+  }
+
+  .deadlineAdder {
+    font-weight: normal;
+  }
+
+  .deadlineHolder {
+    margin-bottom: 20px;
+  }
+
+  .deadlineEntry {
+    margin-bottom: 10px;
+    display: flex;
+    width: 100%;
+
+    .col {
+      flex-basis: 30%;
+      padding-right: 15px;
+    }
+    .delCol {
+      flex-basis: 10%;
+    }
+  }
+
+  &.form-horizontal .checkbox {
+    padding-top: 0;
+  }
+
+  .checkboxNoPadding {
+    padding-top: 0;
+
+    .checkbox {
+      padding-bottom: 20px;
+      margin-top: -10px;
+    }
+  }
+
+  &.amendmentsOnly .hideForAmendmentsOnly {
+    display: none;
+  }
+}
+
+.motionListExportRow {
+  > .export {
+    text-align: right;
+
+    > * {
+      display: inline-block;
+    }
+  }
+
+  > .new {
+    text-align: left;
+
+    > * {
+      display: inline-block;
+    }
+  }
+
+  .title {
+    line-height: 33px;
+    vertical-align: middle;
+    font-weight: bold;
+  }
+
+  .errorProne {
+    font-size: 0.9em;
+  }
+
+  .dropdown-menu {
+    .glyphicon-info-sign {
+      opacity: 0.7;
+      font-size: 14px;
+      margin-left: 5px;
+      margin-top: 2px;
+    }
+    .tooltip {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    li.checkbox {
+      white-space: nowrap;
+      padding-right: 10px;
+    }
+  }
+
+  a.disabled {
+    font-style: italic;
+  }
+}
+
+.motionListSearchForm {
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  .inputPrefix {
+    width: 60px;
+  }
+  .filterVersion, .filterStatus, .filterProposal, .filterTags {
+    max-width: 200px;
+  }
+
+  .filtersTop {
+    display: flex;
+    flex-direction: row;
+    @media screen and (max-width: 1100px) {
+      flex-wrap: wrap;
+    }
+
+    > * {
+      margin-right: 20px;
+      position: relative;
+    }
+  }
+
+  .filtersBottom {
+    label {
+      font-weight: normal;
+    }
+  }
+}
+
+.adminMotionTable {
+  border: solid 1px gray;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  .markCol {
+    width: 30px;
+  }
+
+  .typeCol {
+    width: 5%;
+  }
+
+  .prefixCol {
+    width: 10%;
+  }
+  .replaced .prefixCol {
+    a {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+    .old {
+      font-style: italic;
+      font-size: 0.8em;
+      color: gray;
+    }
+  }
+
+  .actionCol {
+    width: 120px;
+    overflow: visible;
+  }
+
+  .exportCol {
+    overflow: visible;
+    .btn-link {
+      padding: 0;
+      font-family: inherit;
+      font-weight: normal;
+      font-size: 12.6px; // 14px * 0.9em
+      margin-top: -3px;
+      margin-right: -4px;
+    }
+  }
+
+  .proposalCol {
+    .editModified {
+      font-size: 0.8em;
+    }
+  }
+
+  td.titleCol {
+    text-indent: 0;
+
+    > span {
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+
+  td.dateCol .unpublished {
+    color: grey;
+    font-size: 0.8em;
+  }
+
+  .todo {
+    font-style: italic;
+    font-size: 0.8em;
+    color: gray;
+  }
+
+  td.exportCol {
+    font-size: 0.9em;
+  }
+
+  &.JColResizer {
+    .actionCol {
+      overflow: visible;
+    }
+
+    .responsibilityCol {
+      overflow: visible;
+    }
+  }
+
+  .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+
+  .amendmentAjaxTooltip {
+    float: right;
+    color: gray;
+  }
+
+  th, td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 0; // Necessary because of colResizable
+    padding-right: 0;
+    text-indent: 5px;
+    border: solid 1px gray;
+    position: relative;
+  }
+
+  th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.responsibilityCol {
+  overflow: visible;
+
+  .dropdown-menu .selected a:before {
+    content: '✓';
+    display: block;
+    float: left;
+    margin-left: -15px;
+  }
+
+  .respCommentRow {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+
+    .input-group-btn:last-child > .btn-default {
+      margin-left: -6px;
+    }
+  }
+
+  .respButton {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .respUserNone {
+    font-style: italic;
+  }
+}
+
+.adminMotionListActions {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .selectAll {
+    flex-basis: 200px;
+    flex-grow: 0.1;
+    line-height: 40px;
+    vertical-align: middle;
+
+    .btn {
+      font-weight: normal;
+    }
+  }
+
+  .actionButtons {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+.accountsCreateForm {
+  .addMultipleOpener {
+    margin-top: 15px;
+    text-align: right;
+
+    .btn {
+      font-weight: normal;
+      padding-top: 3px;
+    }
+  }
+  .addSingleInit {
+    .rightColumn {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+    .textHolder {
+      flex-basis: 70%;
+      padding-right: 30px;
+    }
+    .btnHolder {
+      flex-basis: 30%;
+      text-align: right;
+    }
+  }
+  .addUsersByLogin {
+    margin-top: 15px;
+  }
+  .namesEmailsHolder {
+    display: flex;
+    width: 100%;
+    > * {
+      flex-grow: 1;
+      padding: 10px;
+    }
+  }
+  .mailExplanation {
+    font-size: 12px;
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  .welcomeEmail {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .pwdRow label {
+    display: block;
+  }
+}
+
+#accountsEditForm, #accountsCreateForm {
+  textarea {
+    width: 100%;
+  }
+
+  .deleteUser {
+    color: $colorDelLink;
+  }
+}
+
+.accountListTable {
+  margin-top: 10px;
+
+  .accessViewCol, .accessCreateCol {
+    text-align: center;
+
+    label {
+      display: block;
+      margin: 0;
+    }
+  }
+}
+
+.siteAccountListTable {
+  .deleteUser {
+    color: $colorDelLink;
+  }
+}
+
+.sysadminForm {
+  text-align: right;
+}
+
+.motionTypeCreateForm {
+  .typePresetList {
+    // From _forms.scss: .form-horizontal
+    @media (min-width: $screen-sm-min) {
+      padding-top: ($padding-base-vertical + 1); // Default padding plus a border
+    }
+  }
+
+  .typePreset {
+    font-weight: bold;
+    vertical-align: middle;
+
+    div {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    input {
+      vertical-align: middle;
+      margin-top: 0;
+      margin-right: 6px;
+    }
+  }
+
+  .typePresetInfo {
+    padding-left: 10px;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-left: solid 3px lightgray;
+  }
+}
+
+.deleteTypeOpener {
+  text-align: right;
+}
+
+.deleteTypeForm {
+  .notDeletable {
+    font-style: italic;
+  }
+
+  .submitRow {
+    text-align: right;
+  }
+}
+
+#motionSupporterHolder {
+  ul.supporterList {
+    list-style-type: none;
+    padding: 0;
+
+    > li {
+      padding: 5px 0 5px 40px;
+    }
+
+    .supporterRow {
+      display: flex;
+      flex-direction: row;
+
+      > * {
+        flex: 1;
+        padding: 0 15px;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+
+    .nameCol {
+      position: relative;
+
+      .moveHandle {
+        position: absolute;
+        left: -15px;
+        top: 5px;
+        font-size: 1.5em;
+        color: lightgrey;
+        cursor: move;
+      }
+    }
+
+    .delSupporter {
+      float: right;
+      color: #f77;
+      margin-top: 5px;
+    }
+
+    @media (hover: hover) {
+      > li {
+        .moveHandle {
+          opacity: 0;
+        }
+
+        .delSupporter {
+          opacity: 0;
+        }
+      }
+
+      > li:hover, > li:focus-within {
+        .moveHandle {
+          opacity: 1;
+        }
+
+        .delSupporter {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .supporterRowAdder {
+    margin-left: 55px;
+    font-weight: normal;
+    padding: 0;
+  }
+
+  .fullTextAdder {
+    float: right;
+    button {
+      font-weight: normal;
+      padding: 0;
+    }
+  }
+
+  #fullTextHolder {
+    padding-left: 25px;
+    @include clearfix();
+  }
+
+  .fullTextCopy {
+    margin-top: 15px;
+
+    .ok {
+      display: none;
+    }
+
+    &.done {
+      .ok {
+        display: inherit;
+      }
+
+      .normal {
+        display: none;
+      }
+    }
+  }
+}
+
+.adminCard {
+  border-radius: $border-radius-base;
+  border: solid 1px #aaa;
+  background-color: #fafafa;
+  margin-bottom: 20px;
+  overflow: hidden;
+
+  header {
+    background-color: #eee;
+    border-bottom: solid 1px #aaa;
+    padding: 5px;
+    font-weight: bold;
+
+    h1, h2, h3 {
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+    }
+  }
+
+  main {
+    padding: 5px;
+  }
+}
+
+.adminCardSupport {
+  main {
+    font-size: 0.9em;
+  }
+}
+
+.adminCardUpdates {
+  ul {
+    padding-left: 20px;
+  }
+
+  .showChanges {
+    font-size: 12px;
+  }
+
+  .changes {
+    font-size: 12px;
+    font-family: $motionFixedFont;
+  }
+}
+
+.proposalStatusIcons {
+  float: right;
+  font-size: 0.8em;
+  margin-top: 2px;
+  margin-right: 8px;
+
+  *[title] {
+    cursor: help;
+  }
+
+  .accepted {
+    color: green;
+    cursor: help;
+  }
+
+  .rejected {
+    color: red;
+  }
+
+  .visible {
+    opacity: 0.8;
+  }
+
+  .notVisible {
+    opacity: 0.5;
+  }
+}
+
+.adminTranslationForm {
+  .description {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  .identifier {
+    display: block;
+    color: #bbb;
+    font-size: 0.8em;
+  }
+}
+
+.themingForm {
+  .submitRow {
+    text-align: center;
+  }
+
+  @media screen and (min-width: 550px) {
+    th {
+      width: 40%;
+    }
+    td {
+      width: 60%;
+    }
+  }
+  @media screen and (max-width: 449px) {
+    th {
+      display: block;
+    }
+    td {
+      display: block;
+      border-top: none !important;
+    }
+  }
+
+  .imageChooser {
+    text-align: left;
+
+    .uploadCol label {
+      right: auto;
+      left: 0;
+      font-weight: normal;
+    }
+  }
+
+  .logoPreview img {
+    max-width: 150px;
+  }
+}
+
+
+.userAdminList {
+  .filterHolder {
+    text-align: right;
+    margin-bottom: 20px;
+    .usernameFilter, .groupFilter {
+      display: inline-block;
+      width: 200px;
+      vertical-align: top;
+      text-align: left;
+    }
+    .groupFilter {
+      .vs__dropdown-toggle {
+        padding: 2px 0 5px;
+      }
+      .vs__selected {
+        width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .orgaOpenerHolder {
+      float: left;
+      text-align: left;
+      button {
+        margin-top: 5px;
+        font-weight: normal;
+      }
+    }
+  }
+  ul.userList, ul.groupList {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    > li {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-bottom: solid 1px lightgray;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .userInfo {
+    flex-basis: 50%;
+
+    .nameUnfiltered {
+      font-weight: bold;
+    }
+  }
+
+  .loginTypeImg {
+    display: inline-block;
+    max-width: 16px;
+    max-height: 16px;
+  }
+
+  .groupsDisplay {
+    flex-basis: 60%;
+    text-align: right;
+  }
+
+  .groupsChange {
+    flex-basis: 55%;
+  }
+
+  .groupsChangeOps {
+    flex-basis: 50px;
+    text-align: right;
+    padding: 2px;
+  }
+
+  .groupInfo {
+    flex-grow: 1;
+    .name {
+      font-weight: bold;
+    }
+  }
+  .groupActions {
+    text-align: right;
+  }
+
+  .btn.btn-link {
+    padding: 0;
+  }
+
+  .btnLinkAbort, .btnRemove, .btnCancel {
+    color: $colorDelLink;
+    opacity: 0.5;
+  }
+
+  .btnEdit {
+    margin-left: 7px;
+    margin-right: 7px;
+  }
+
+  .btnRemove {
+    color: $colorDelLink;
+    opacity: 0.5;
+    margin-right: -15px;
+
+    @media (hover: hover) {
+      opacity: 0;
+
+      &:active, &:focus {
+        opacity: 0.5;
+      }
+    }
+  }
+  @media (hover: hover) {
+    li:hover {
+      .btnRemove {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .btnGroupCreate {
+    font-weight: normal;
+  }
+
+  .addGroupForm {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: solid 1px lightgray;
+
+    > * {
+      flex-grow: 1;
+    }
+    .actions {
+      text-align: right;
+      padding-top: 18px;
+    }
+  }
+}
+
+.editOrganisationModal {
+  table {
+    width: 100%;
+  }
+  td {
+    padding-top: 5px;
+  }
+  td:first-child {
+    padding-right: 5px;
+  }
+  .btnAdd {
+    font-weight: normal;
+  }
+  .btnRemove {
+    color: $colorDelLink;
+  }
+}
+
+.editUserGroupModal {
+  label {
+    font-weight: normal;
+    display: block;
+  }
+  dl {
+    margin-bottom: 5px;
+  }
+  dt {
+    display: inline;
+    margin-right: 5px;
+  }
+  dd {
+    display: inline;
+    &:after {
+      content: "\a";
+      display: block
+    }
+  }
+  .verticalLabels label {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .changeLogLink {
+    float: left;
+  }
+  .deleteActivator {
+    text-align: right;
+  }
+  .addRestrictedPermissionDialog {
+    .restrictedPermissions {
+      margin-bottom: 20px;
+    }
+    .restrictedTo {
+      min-height: 100px;
+    }
+  }
+  .preventPwdChangeHolder {
+    margin-top: 7px;
+  }
+}
+
+.editUserModal {
+  label.disabled {
+    opacity: 0.5;
+  }
+  .remove2FaHolder {
+    margin-left: 17px;
+    font-size: 0.8em;
+  }
+}
+
+.editGroupModal {
+  .none {
+    font-style: italic;
+  }
+  .restrictedPrivilegeList {
+    li {
+      border-bottom: solid 1px #e5e5e5;
+    }
+    .btnRemove {
+      float: right;
+      font-weight: normal;
+      color: $colorDelLink;
+    }
+  }
+  .btnAddRestrictedPermission {
+    font-weight: normal;
+    font-size: 0.8em;
+  }
+}
+
+.policyWidget {
+  .selectize-control {
+    margin-top: 5px;
+  }
+
+  .selectize-input {
+    border-radius: 0.25rem;
+    padding-top: 5px;
+    padding-bottom: 4px;
+  }
+}
+
+.v-policy-select {
+  .v-select {
+    margin-top: 7px;
+    .vs__dropdown-toggle {
+      border-radius: 3px;
+    }
+  }
+}

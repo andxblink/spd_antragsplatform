@@ -1,0 +1,438 @@
+html {
+  height: 100%;
+}
+
+blockquote {
+  margin: 3px 3px 3px 15px;
+  border-left: dotted 2px gray;
+  padding: 5px;
+}
+
+p, ul {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: $linkTextDecoration;
+  color: $colorLinksLight;
+  &:hover {
+    text-decoration: $linkTextDecoration;
+    color: lighten($colorLinksLight, 15%);
+  }
+  &.btn {
+    text-decoration: none;
+  }
+}
+
+del, ul.deleted, ol.deleted, li.deleted, blockquote.deleted, pre.deleted, div.deleted, p.deleted, h1.deleted, h2.deleted, h3.deleted, h4.deleted, h5.deleted {
+  color: #880000;
+  text-decoration: line-through;
+  @if $delFontBold {
+    font-weight: bold;
+  }
+}
+
+ins, ul.inserted, ol.inserted, li.inserted, blockquote.inserted, pre.inserted, div.inserted, p.inserted, h1.inserted, h2.inserted, h3.inserted, h4.inserted, h5.inserted {
+  color: #008800;
+  text-decoration: underline;
+  @if $insFontBold {
+    font-weight: bold;
+  }
+}
+
+del.space, ins.space, del.formatting, ins.formatting {
+  font-style: italic;
+  font-size: 0.8em;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+label {
+  input, textarea {
+    font-weight: normal;
+  }
+}
+
+
+button.link {
+  background: transparent;
+  border: none;
+  align-items: normal;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  height: auto;
+  padding: 0;
+  perspective-origin: 0 0;
+  text-align: start;
+  transform-origin: 0 0;
+  width: auto;
+  -moz-appearance: none;
+  -webkit-logical-height: 1em;
+  -webkit-logical-width: auto;
+  box-sizing: content-box; // Otherwise the text of the delete button gets invisible on Safari
+}
+@supports (-moz-appearance:none) {
+  button.link::-moz-focus-inner {
+    border: none;
+    padding: 0;
+  }
+  button.link:focus {
+    outline-style: dotted;
+    outline-width: 1px;
+  }
+}
+
+.stdDropdown {
+  display: block;
+  width: 100%;
+  padding: $padding-base-vertical #{$padding-base-horizontal + 18px} $padding-base-vertical $padding-base-horizontal;
+  margin: 0;
+  font-family: inherit;
+  -moz-padding-start: calc(0.75rem - 3px);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  word-wrap: normal;
+  text-transform: none;
+  transition: border ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+
+  &:focus {
+    box-shadow: 0 0 3px 2px $focusShadowColor;
+    transition: border ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+    outline: none;
+  }
+  &.stdDropdownSmall {
+    width: auto;
+    display: inline;
+    font-size: 0.8em;
+    padding: 3px 18px 3px 3px;
+  }
+}
+
+.stdEqualCols {
+  display: flex;
+  width: 100%;
+  > * {
+    flex-grow: 1;
+    flex-basis: 10%; // Exact base doesn't matter, it just needs to be set to the same for all columns
+  }
+  &.stdPadding {
+    > * {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    > *:first-child {
+      padding-left: 0;
+    }
+    > *:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.stdTwoCols {
+  display: block;
+  width: 100%;
+  .leftColumn, .leftColumnUnstyled, .rightColumn {
+    text-align: left;
+    display: block;
+  }
+  .leftColumn {
+    font-weight: bold;
+  }
+  @media screen and (max-width: $screenMinWith - 1) {
+    .leftColumn, .leftColumnUnstyled {
+      padding-top: 7px;
+    }
+    .rightColumn {
+      padding-bottom: 7px;
+    }
+    &:first-child .leftColumn, &:first-child .leftColumnUnstyled {
+      padding-top: 0; // Padding comes from .content here
+    }
+    &:last-child .rightColumn {
+      padding-bottom: 0; // Padding comes from .content here
+    }
+  }
+  @media screen and (min-width: $screenMinWith) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .leftColumn, .leftColumnUnstyled, .rightColumn, .middleColumn {
+      flex-grow: 0;
+      min-height: 40px;
+      padding-top: 12px;
+    }
+    .leftColumn {
+      flex-basis: 30%;
+      text-align: right;
+      padding-right: 15px;
+    }
+    .leftColumnUnstyled {
+      flex-basis: 30%;
+      padding-right: 15px;
+    }
+    .middleColumn {
+      flex-basis: 40%;
+      padding-left: 15px;
+    }
+    .rightColumn {
+      flex-basis: 70%;
+      padding-left: 15px;
+    }
+    .middleColumn + .rightColumn {
+      flex-basis: 30%;
+    }
+    .halfColumn {
+      flex-basis: 50%;
+      padding-left: 15px;
+    }
+
+    .modal-body & {
+      .leftColumn, .leftColumnUnstyled {
+        flex-basis: 35%;
+      }
+      .middleColumn {
+        flex-basis: 35%;
+      }
+      .rightColumn {
+        flex-basis: 65%;
+        padding-left: 15px;
+      }
+    }
+  }
+}
+
+.alertNonPublicSection {
+  margin: -10px 20px 20px 20px;
+}
+
+.saveRow {
+  text-align: center;
+}
+
+.stdSortingWidget {
+  ul {
+    margin: 0;
+    padding: 0;
+
+    p {
+      margin: 0;
+    }
+  }
+  li > ul {
+    margin-left: 20px;
+  }
+
+  .btn.editBtn {
+    padding: 0;
+  }
+  .btn.adderBtn {
+    padding: 0;
+    font-size: 12px;
+    line-height: 12px;
+    height: 16px;
+    font-weight: normal;
+  }
+  .adderRow {
+    opacity: 0;
+    line-height: 12px;
+    height: 16px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  > .adderRow {
+    opacity: 1; // Make it easier to find the functionality initially
+  }
+  li > .adderRow {
+    padding-left: 20px;
+  }
+  .drag-area {
+    min-height: 0px;
+    display: block;
+    pointer-events: all;
+  }
+  .item {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0 0 0;
+    border: solid 1px transparent;
+    &.sortable-chosen {
+      border: solid 1px #ddd;
+      border-radius: 3px;
+      background-color: #fcfcfc;
+    }
+  }
+
+  .sortIndicator {
+    cursor: move;
+  }
+  .saveRow {
+    margin-top: 20px;
+
+    position: relative;
+    > * {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .saving {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      pointer-events: none;
+      padding-top: 6px;
+    }
+    &.saving .saving {
+      opacity: 1;
+    }
+    .saved {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      pointer-events: none;
+      padding-top: 6px;
+    }
+    &.saved .saved {
+      opacity: 1;
+    }
+    .savable {
+      opacity: 0;
+    }
+    &.savable .savable {
+      opacity: 1;
+    }
+  }
+}
+
+.agendaEditWidget {
+  background: #f5f5f5;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 5px;
+  margin-bottom: 20px;
+
+  .settings {
+    margin-top: -47px;
+    margin-bottom: 40px;
+    float: right;
+    label {
+      font-weight: normal;
+    }
+  }
+
+  > .drag-area {
+    min-height: 100px;
+  }
+
+  .infoRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .sortIndicator {
+    flex-grow: 0;
+    flex-basis: 25px;
+    padding-top: 10px;
+  }
+
+  .datetimepicker {
+    flex-grow: 0;
+    padding-right: 5px;
+
+    &.time {
+      flex-basis: 80px;
+
+      &.locale-en {
+        flex-basis: 100px;
+      }
+    }
+    &.date {
+      flex-basis: 250px;
+    }
+
+    .form-control {
+      padding: 6px 6px;
+    }
+    .input-group-addon {
+      padding: 6px 6px;
+      background-color: white;
+      color: gray;
+    }
+  }
+  .codeCol {
+    flex-grow: 0;
+    flex-basis: 50px;
+    margin-right: 5px;
+  }
+  .titleCol {
+    flex-grow: 1;
+    flex-basis: 200px;
+    margin-right: 5px;
+  }
+  .motionTypeCol {
+    flex-grow: 0;
+    flex-basis: 180px;
+    margin-right: 5px;
+  }
+  .extraSettings {
+    flex-grow: 0;
+    flex-basis: 40px;
+  }
+
+  .saveRow {
+    margin-bottom: 30px;
+  }
+
+  .addLinkHolder {
+    position: relative;
+    min-width: 44px;
+    padding-left: 5px;
+  }
+  .btnDelete {
+    color: $colorDelLink;
+    opacity: 0.5;
+    margin-right: -15px;
+  }
+  @media (hover: hover) {
+    .btnDelete {
+      opacity: 0;
+    }
+    .infoRow:hover > .addLinkHolder .btnDelete {
+      opacity: 1;
+    }
+  }
+
+}
+
+.stdNonFormattedList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  > li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.saveholder {
+  clear: both;
+  padding: 10px;
+  text-align: center;
+}

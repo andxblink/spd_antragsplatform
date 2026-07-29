@@ -1,0 +1,495 @@
+@import "variables";
+
+.votingCommon {
+  .remainingTime {
+    @if ($font-size-base < 16) {
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+
+    .time {
+      font-weight: bold;
+    }
+    .over {
+      color: red;
+    }
+  }
+  .votingListCommon {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    clear: both;
+
+    > li {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-bottom: solid 1px #ccc;
+      &.voteListShown {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      &.abstentions {
+        > div {
+          width: 100%;
+          font-style: italic;
+          font-weight: bold;
+          text-align: right;
+        }
+      }
+
+      // Always shown
+      .titleLink {
+        flex-grow: 1;
+        flex-basis: 40%;
+      }
+      .titleGroupName {
+        font-weight: bold;
+      }
+      // Admin and sometimes user
+      .votesDetailed {
+        flex-grow: 1;
+        flex-basis: 40%;
+      }
+      // Only when closed, then admin and user
+      .result {
+        flex-grow: 0;
+        flex-basis: 20%;
+      }
+      // Active for users, when the voting is opened
+      .votingOptions, .voted {
+        flex-basis: 230px;
+        flex-grow: 0;
+        text-align: right;
+      }
+      // For presence calls, the result is rather small
+      &.answer_template_2 {
+        .votesDetailed {
+          flex-basis: 20%;
+          flex-grow: 0;
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .btnShowVotes {
+        font-weight: normal;
+      }
+      .quorumCounter {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .votingListAdmin {
+    .voteResults {
+      display: block;
+    }
+  }
+
+  .votesDetailed {
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    thead th {
+      text-align: center;
+    }
+
+    th {
+      text-align: center;
+    }
+    td {
+      text-align: center;
+    }
+  }
+
+  li.showResults {
+    // Flex properties are set above
+    &.showDetailedResults {
+      // nothing yet
+    }
+    &.noDetailedResults {
+      // Nothing yet
+    }
+  }
+
+  .titleLink {
+    line-height: 16px;
+    overflow: hidden;
+    font-weight: bold;
+    > div {
+      margin-bottom: 7px;
+    }
+  }
+  .amendmentBy {
+    font-size: 0.8em;
+    color: #888;
+  }
+
+  .noVotingsYet {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #ccc;
+    .alert {
+      margin-bottom: 0;
+    }
+  }
+
+  .votingOptions {
+    button {
+      margin-left: 5px;
+    }
+  }
+
+  .result {
+    text-align: right;
+    white-space: nowrap;
+
+    .accepted {
+      color: $colorGreenLight;
+    }
+
+    .rejected {
+      color: $colorDelLink;
+    }
+  }
+
+  .votingFooter {
+    padding-top: 10px;
+    border-top: solid 1px #ccc;
+  }
+
+  .downloadResults {
+    text-align: right;
+    margin-bottom: 10px;
+    .btn {
+      font-weight: normal;
+    }
+  }
+
+  .votingExplanation .glyphicon {
+    margin-right: 3px;
+  }
+  .publicHint {
+    padding-left: 16px;
+  }
+}
+
+.currentVotingWidget {
+  .votingsAdminLink {
+    float: right;
+  }
+  .remainingTime {
+    float: right;
+  }
+
+  .votingsAdminLink + .voteList {
+    border-top: solid 1px #ccc;
+  }
+
+  .votingExplanation {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .votingFooter {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .votedCounter {
+      flex: 1;
+    }
+    .showAll {
+      flex: 1;
+      text-align: right;
+    }
+  }
+}
+
+.manageVotings {
+  .settingsToggleGroup {
+    .btn-link {
+      color: $text-color;
+    }
+    .btn-link:hover {
+      color: lighten($text-color, 10%);
+    }
+    .btn {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  .btnRemove {
+    float: right;
+    color: $colorDelLink;
+  }
+  .activateHeader {
+    font-weight: bold;
+    float: right;
+    color: $headingSecondaryText;
+    text-transform: none;
+    text-shadow: none;
+    font-size: 14px;
+  }
+
+  .votingSettingsSummary {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ccc;
+  }
+
+  .votingVisibility {
+    span {
+      margin-left:5px;
+      display: inline-block;
+    }
+  }
+
+  .prepActions {
+    .removeBtn {
+      color: $colorDelLink;
+    }
+  }
+
+  .addingItemsForm {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    button {
+      font-weight: normal;
+    }
+
+    .addingMotions {
+      select {
+        max-width: 450px;
+        display: inline-block;
+      }
+    }
+  }
+
+  .activityLog {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    &.closed {
+      max-height: 45px;
+      overflow: hidden;
+      position: relative;
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 45px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%);
+        pointer-events: none;
+      }
+    }
+  }
+
+  .activityOpener, .activityCloser {
+    float: right;
+    .btn {
+      font-weight: normal;
+    }
+  }
+
+  .votingOperations {
+    float: right;
+  }
+
+  .votingSettings {
+    label {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .btnDelete {
+      float: right;
+      color: $colorDelLink;
+    }
+    fieldset {
+      margin-bottom: 15px;
+      legend {
+        font-weight: 700;
+      }
+      .hint {
+        font-size: 0.8em;
+      }
+      label {
+        display: inline-block;
+        font-weight: normal;
+        margin-right: 15px;
+        margin-bottom: 0;
+      }
+
+      &.inputWithLabelHolder label {
+        display: table;
+        max-width: 200px;
+        input {
+          min-width: 80px;
+        }
+      }
+    }
+  }
+}
+
+.votingResultTable {
+  table-layout: fixed;
+  width: 100%;
+
+  th {
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  .total {
+    font-weight: bold;
+  }
+}
+
+.votingAdderForm {
+  .btnAddOpener {
+    color: $colorGreenLight;
+    font-weight: normal;
+  }
+}
+
+.votingDataActions {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  border-bottom: solid 1px #ccc;
+  padding-bottom: 10px;
+
+  .votingDetails ul {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    > li {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      &:before {
+        content: ', ';
+      }
+      &:first-child:before {
+        content: '';
+      }
+    }
+  }
+  .data {
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .actions {
+    flex-basis: 360px;
+    flex-grow: 1;
+    text-align: right;
+
+    > .btn, > .btn-group {
+      margin-left: 5px;
+    }
+  }
+}
+
+.v-vote-list {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 20px;
+
+  .regularVoteList {
+    flex-basis: 25%;
+    flex-grow: 1;
+
+    &.notVotedList {
+      color: gray;
+    }
+
+    .voteWeight {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    ul {
+      display: block;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: block;
+        padding: 0;
+        margin: 0;
+      }
+    }
+    .userGroupName {
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+    .none {
+      font-style: italic;
+    }
+  }
+
+  .userGroupSetterOpener {
+    white-space: normal; // Breaks the layout with 4+ columns with default "nowrap"
+  }
+  .userGroupSetter {
+    display: flex;
+    flex-direction: row;
+  }
+  @media (hover: hover) {
+    .userGroupSetter {
+      opacity: 0;
+    }
+    .showingSelector .userGroupSetter {
+      opacity: 1;
+    }
+  }
+  .voteListHolder:hover .userGroupSetter {
+    opacity: 1;
+  }
+  .userGroupSetter .btn {
+    font-weight: normal;
+  }
+}
+
+.contentVotingResult {
+  display: flex;
+  width: 100%;
+  > * {
+    flex-basis: 25%;
+    padding-left: 15px;
+    padding-right: 15px;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}

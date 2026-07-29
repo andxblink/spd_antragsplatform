@@ -1,0 +1,17 @@
+.hideIfEmpty:empty {
+  display: none;
+}
+
+@media (hover: hover) {
+  .hoverHolder {
+    .hoverElement {
+      display: none;
+    }
+
+    &:hover {
+      .hoverElement {
+        display: inherit;
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+$grueneFontPath: './' !default;
+
+@font-face {
+  font-family: 'GrueneType';
+  font-style: italic;
+  font-weight: bold;
+  src: url($grueneFontPath + 'GrueneType-BlackCondensedItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'GrueneTypeNeue';
+  font-style: normal;
+  font-weight: normal;
+  src: url($grueneFontPath + 'GrueneTypeNeue-Regular.woff2') format('woff2');
+}

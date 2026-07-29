@@ -1,0 +1,280 @@
+$headlineHeight: 125px;
+
+.contentPage {
+  margin-left: -1px;
+  margin-right: -1px;
+
+  .editCaller {
+    float: right;
+    font-weight: normal;
+  }
+
+  .textHolder {
+    > h1, > h2.green, h2.darkgreen {
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.contentPageWelcome {
+  overflow: auto;
+
+  &.hasDeadline {
+    min-height: $headlineHeight + 20; // Spacing for the deadline circle
+  }
+
+  .editCaller {
+    float: right;
+    margin-left: 10px;
+    font-weight: normal;
+  }
+}
+
+.contentPageFeeds {
+  .editCaller {
+    float: right;
+  }
+}
+
+.contentSettingsToolbar {
+  input[type=text] {
+    max-width: 160px;
+    display: inline-block;
+  }
+  .options {
+    padding-top: 5px;
+    label {
+      font-weight: normal;
+    }
+  }
+}
+.policyToolbarBelowTitle {
+  border-bottom: solid 1px #aaa;
+  padding: 7px 19px;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: row;
+  > .title {
+    flex-basis: 15%;
+    padding-top: 7px;
+  }
+  > .policySelectHolder {
+    flex-basis: 35%;
+    width: auto;
+    padding-right: 10px;
+    .stdDropdown {
+      padding-bottom: 10px;
+    }
+  }
+  #policyReadPageGroups {
+    flex-basis: 50%;
+  }
+}
+
+.deadlineCircle {
+  float: right;
+  @include linear-gradient(90deg, $btn-primary-bg, lighten($btn-primary-bg, 3.5%));
+  text-align: center;
+  vertical-align: middle;
+  overflow: visible; // Tooltip should be visible
+  font-family: $deadlineCircleFont;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  margin-left: 30px;
+  @include border-radius(90px);
+
+
+  &.single {
+    width: $headlineHeight;
+    height: $headlineHeight;
+
+    .top {
+      font-size: 12px;
+      line-height: 14px;
+      padding-top: 12px;
+      max-width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .date {
+      font-size: 16px;
+      line-height: 17px;
+      padding-top: 20px;
+    }
+  }
+  &.multiple {
+    width: $headlineHeight;
+    height: $headlineHeight;
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 12px;
+
+    .name {
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: auto; // if there are more than 2 lines
+      min-height: 45px;
+      line-height: 20px;
+      padding: 5px 5px 8px;
+      box-sizing: border-box; // Ensures padding doesn't affect the min-height
+      overflow: hidden;
+      text-align: center;
+
+      p {
+        margin: 0;
+        text-align: center;
+        hyphens: auto;
+        max-width: 120px;
+      }
+
+      &.singleline p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      &.nobottom {
+        margin-top: 10px;
+      }
+    }
+
+    .tooltip-inner {
+      min-width: 200px;
+      text-align: left;
+    }
+
+    .tooltipHolder {
+      position: relative;
+      overflow: visible;
+    }
+    .tooltipIcon {
+      margin-right: -20px;
+    }
+  }
+}
+
+.downloadableFiles {
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .deleteFile {
+    color: $colorDelLink;
+  }
+
+  .fileList {
+    list-style-type: none;
+
+    @media (hover: hover) {
+      li .deleteFile {
+        opacity: 0.1;
+      }
+      li:hover .deleteFile {
+        opacity: 1;
+      }
+      li .deleteFile:focus {
+        opacity: 1;
+      }
+    }
+  }
+
+  .downloadableFilesUpload {
+    display: flex;
+
+    > * {
+      flex: 0;
+    }
+
+    h3 {
+      margin: 8px 0 0 0;
+      flex-basis: 150px;
+      font-size: 1em;
+    }
+
+    label {
+      font-weight: normal;
+    }
+
+    .uploadCol {
+      flex-basis: 200px;
+    }
+
+    .titleCol {
+      flex: 1;
+      max-width: 300px;
+    }
+  }
+}
+
+.documentsPage {
+  .editCaller {
+    float: right;
+    margin-left: 10px;
+    font-weight: normal;
+  }
+
+  .downloadAndActions {
+    text-align: right;
+  }
+
+  .deleteGroupForm {
+    display: inline;
+    float: right;
+    margin-right: 15px;
+
+    .deleteGroupBtn {
+      color: $colorDelLink;
+      opacity: 0;
+      &:active, &:focus {
+        opacity: 1;
+      }
+    }
+  }
+  .greenHeader:hover {
+    .deleteGroupForm .deleteGroupBtn {
+      opacity: 1;
+    }
+  }
+
+  .deleteFileBtn {
+    display: inline;
+    margin-left: 15px;
+    color: $colorDelLink;
+    opacity: 0;
+    &:active, &:focus {
+      opacity: 1;
+    }
+  }
+  .motion .title:hover .deleteFileBtn {
+    opacity: 1;
+  }
+
+  .btn.btn-link {
+    padding: 0;
+    font-weight: normal;
+  }
+
+  .fileAddForm {
+    display: flex;
+    flex-direction: row;
+    margin-left: 32px;
+    margin-top: -25px;
+    margin-bottom: 40px;
+
+    .uploadCol {
+      label {
+        font-weight: normal;
+        color: $colorLinks;
+      }
+    }
+  }
+}

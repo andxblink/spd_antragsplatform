@@ -1,0 +1,314 @@
+@charset "UTF-8";
+
+$icon-font-path: "../../fonts/";
+@import "css/variables";
+
+
+$ptSansFontPath: "./";
+@import "ptsans";
+@import "gruenetype";
+
+$primary-600: #008939;
+$secondary-600: #005437;
+$grashalm: #8ABD24;
+$tanne: #005437;
+$klee: #008939;
+
+$use-box-shadow: false;
+$container-md: 1200px;
+$contentBorderRadius: 8px;
+$sidebarBackground: $secondary-600;
+$sidebarWidth: 280px;
+$sidebarActionFont: "PT Sans Bold", sans-serif;
+$createMotionBtnColor: $secondary-600;
+$bookmarkAmendmentBackground: #afcb08;
+$bookmarkCommentColor: $secondary-600;
+$headingFont: "PT Sans Bold", sans-serif;
+$headingPrimaryText: #ffffff;
+$headingPrimaryBackground: $tanne;
+$headingPrimarySize: 30px;
+$headingSecondaryText: #ffffff;
+$headingSecondaryBackground: $primary-600;
+$headingSecondarySize: 18px;
+$headingTertiaryText: #444;
+$headingTertiaryBackground: $grashalm;
+$headingTertiarySize: 14px;
+$headingFontUppercase: false;
+$uppercaseTitles: false;
+$menuFont: "PT Sans Bold", sans-serif;
+$menuLink: #fff;
+$menuActive: #ddd;
+$bodyFont: "PT Sans", sans-serif;
+$font-size-base: 14px;
+$textColor: #484649;
+$colorLinks: $tanne;
+$colorLinksLight: $klee;
+$colorDelLink: #FF7777;
+$linkTextDecoration: underline;
+$motionFixedFont: "VeraMono", Consolas, Courier, sans-serif;
+$motionFixedFontColor: #222;
+$motionStdFontSize: 16px;
+$brand-primary: #015437;
+$btn-success-bg: #008939;
+$buttonFont: "PT Sans Bold", sans-serif;
+
+$colorLinksFooter: $colorLinks;
+$label-success-bg: $btn-success-bg;
+
+$screen-md-min: ($container-md + 90px) !default; // Extra spacing for the "create motion button"
+$mainContentWidth: $container-md - $sidebarWidth !default;
+$content-max-width: $mainContentWidth - 2px !default;
+$grid-float-breakpoint: $screen-md-min !default;
+$font-size-base: 18px;
+
+$table-border-color: $colorGreenLight;
+
+$sidebarActionFont: "PT Sans", sans-serif;
+$deadlineCircleFont: "PT Sans", sans-serif;
+$motionFixedWidth: 740px;
+$inlineAmendmentPreambleHeight: 35px;
+$inlineAmendmentPreambleColor: $secondary-600;
+
+@import "css/bootstrap";
+@import "css/fontello";
+@import "css/wizard";
+@import "css/helpers";
+@import "css/elements";
+@import "css/bootstrap_overwrites";
+@import "css/base_layout";
+@import "css/contentpage";
+@import "css/consultation_motion_list";
+@import "css/speech_lists";
+@import "css/voting";
+@import "css/motions";
+@import "css/proposed_procedure";
+@import "css/styles";
+@import "css/merging";
+@import "css/sidebar";
+@import "css/projector";
+@import "css/user_pages";
+
+html {
+  background: #F6F1E9;
+}
+
+body {
+  background: #F6F1E9;
+}
+
+.well {
+  h1 {
+    text-shadow: none;
+  }
+  h2.green, h3.green {
+    text-shadow: none;
+  }
+  .nav-header {
+    text-shadow: none;
+  }
+  .greenHeaderExtraLink {
+    color: white;
+  }
+  h1 .btnFullscreen, .primaryHeader .btnFullscreen {
+    margin-top: -30px;
+    margin-right: -8px;
+  }
+}
+
+#pageHeader {
+  background: $tanne;
+  margin-bottom: 60px;
+
+  @media screen and (min-width: $screen-md-min) and (min-height: 600px) {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logoHolder {
+    line-height: 0;
+  }
+
+  .headerContent {
+    display: flex;
+    flex-direction: row;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    margin-left: auto;
+    margin-right: auto;
+    @media (min-width: $screen-sm-min) {
+      width: $container-sm;
+    }
+    @media (min-width: $screen-md-min) {
+      width: $container-md;
+    }
+    @media (min-width: $screen-lg-min) {
+      width: $container-lg;
+    }
+
+    body.fullscreen & {
+      width: auto;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  .logoImg {
+    display: block;
+    width: 80px;
+    height: 80px;
+    background-image: url(Sonnenblume_RGB_gelb_2025.svg);
+    background-repeat: no-repeat;
+
+    @media screen and (max-width: 479px) {
+      width: 40px;
+      height: 40px;
+      background-size: 300px 44px;
+    }
+  }
+
+
+  .mainMenu {
+    flex-grow: 1;
+    text-align: left;
+    padding-top: 15px;
+    .navbar .nav {
+      float: none;
+      li a {
+        font-weight: normal;
+        color: white;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      li.active a {
+        font-weight: normal;
+        color: white !important;
+      }
+    }
+  }
+  .titleHolder {
+    text-align: right;
+    .antragsgruen {
+      color: white;
+      font-size: 42px;
+      line-height: 48px;
+      font-style: normal;
+      font-weight: normal;
+      text-shadow: none;
+      font-family: "GrueneTypeNeue", sans-serif;
+    }
+    .consultationTitle {
+      margin-top: 5px;
+      color: white;
+      font-size: 24px;
+      line-height: 26px;
+      text-shadow: none;
+    }
+  }
+
+  @media screen and (max-width: $screen-md-min) {
+    .headerContent {
+      flex-wrap: wrap;
+    }
+    .logoHolder {
+      order: 2;
+      flex-basis: 33%;
+    }
+    .titleHolder {
+      order: 2;
+      flex-basis: 67%;
+    }
+    .mainMenu {
+      order: 3;
+      flex-basis: 100%;
+    }
+    .navbar-nav > li {
+      float: left;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    .logoHolder {
+      padding-left: 20px;
+    }
+    .titleHolder {
+      padding-right: 20px;
+    }
+  }
+}
+
+.breadcrumb {
+  color: $klee;
+  .pseudoLink, a {
+    color: $klee;
+  }
+  .active {
+    color: darken($klee, 10%);
+  }
+}
+
+@mixin gruenLinkHover {
+  --mark-height: 0.8em;
+  --mark-color: #fff17a;
+  --mark-skew: calc(var(--mark-height) / 100 * 22.6);
+  --mark-overlap: 0.3em;
+
+  text-decoration-line: none;
+  margin-inline: calc(var(--mark-overlap) * -1);
+  padding-inline: var(--mark-overlap);
+  background-color: transparent;
+  background-image: linear-gradient(to bottom right,transparent 0 50%,var(--mark-color) 50% 100%),linear-gradient(var(--mark-color),var(--mark-color)),linear-gradient(to top left,transparent 50%,var(--mark-color) 50%);
+  background-size: calc(var(--mark-skew)) calc(var(--mark-height)),calc(100% - var(--mark-skew) * 2 + .5px) var(--mark-height),calc(var(--mark-skew)) var(--mark-height);
+  background-position: 0 100%,bottom,100% 100%;
+  background-repeat: no-repeat;
+  color: inherit;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@mixin gruenLinkFixingMargins {
+  --mark-height: 0.8em;
+  --mark-color: #fff17a;
+  --mark-skew: calc(var(--mark-height) / 100 * 22.6);
+  --mark-overlap: 0.3em;
+
+  margin-inline: calc(var(--mark-overlap) * -1);
+  padding-inline: var(--mark-overlap);
+  box-decoration-break: clone;
+
+  &:hover {
+    @include gruenLinkHover();
+    text-decoration-line: underline;
+  }
+}
+
+#mainContent {
+  a:not(.btn,.list-group-item,.greenHeaderExtraLink):not(.dropdown-menu a):not(.bookmarks a) {
+    text-decoration-line: underline;
+    text-underline-offset: 4px;
+    color: $colorLinks;
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+      @include gruenLinkHover();
+    }
+  }
+
+  a.btn, a.createMotion {
+    text-decoration: none;
+  }
+}
+#sidebar .nav-list > li a {
+  @include gruenLinkFixingMargins();
+}
+.adminMotionTable td.titleCol > span {
+  display: inline;
+}
+.motionListForm td a:not(.dropdown-menu a) {
+  @include gruenLinkFixingMargins();
+}
+.navbar .nav li a {
+  text-transform: none;
+}
+
