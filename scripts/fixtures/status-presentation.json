@@ -1,0 +1,98 @@
+[
+  {
+    "name": "published motion",
+    "status": 3,
+    "expected_kind": "published",
+    "resolution": null,
+    "submission": "2026-07-21 09:10:00",
+    "creation": "2026-07-20 08:00:00",
+    "expected_date": {"key": "status_date_submitted", "date": "2026-07-21 09:10:00"},
+    "legal_record": {
+      "text": "Exact motion text remains upstream-owned.",
+      "line_numbers": [1, 2],
+      "authors": ["Mara Mitglied"],
+      "votes": ["accepted"],
+      "publication_history": ["2026-07-21"]
+    }
+  },
+  {
+    "name": "resolved amendment",
+    "status": 4,
+    "expected_kind": "accepted",
+    "resolution": "2026-07-28",
+    "submission": "2026-07-22 15:17:00",
+    "creation": "2026-07-21 12:00:00",
+    "expected_date": {"key": "status_date_decided", "date": "2026-07-28"},
+    "legal_record": {
+      "text": "Exact amendment text remains upstream-owned.",
+      "line_numbers": [4],
+      "authors": ["Testuser"],
+      "votes": ["rejected", "accepted"],
+      "publication_history": ["2026-07-28"]
+    }
+  },
+  {
+    "name": "custom status",
+    "status": 23,
+    "expected_kind": "other",
+    "resolution": null,
+    "submission": null,
+    "creation": "2026-07-20 08:00:00",
+    "expected_date": null,
+    "legal_record": {
+      "text": "Configured custom wording remains upstream-owned.",
+      "line_numbers": [7],
+      "authors": ["Admin"],
+      "votes": [],
+      "publication_history": []
+    }
+  },
+  {
+    "name": "draft",
+    "status": 1,
+    "expected_kind": "draft",
+    "resolution": null,
+    "submission": null,
+    "creation": "2026-07-20 08:00:00",
+    "expected_date": {"key": "status_date_saved", "date": "2026-07-20 08:00:00"},
+    "legal_record": {
+      "text": "Draft text remains upstream-owned.",
+      "line_numbers": [1],
+      "authors": ["Member"],
+      "votes": [],
+      "publication_history": []
+    }
+  },
+  {
+    "name": "adjourned (4.18)",
+    "status": 33,
+    "expected_kind": "adjourned",
+    "resolution": null,
+    "submission": "2026-09-14 10:00:00",
+    "creation": "2026-09-13 10:00:00",
+    "expected_date": {"key": "status_date_submitted", "date": "2026-09-14 10:00:00"},
+    "legal_record": {
+      "text": "Adjourned items keep upstream's own status label.",
+      "line_numbers": [3],
+      "authors": ["Admin"],
+      "votes": [],
+      "publication_history": ["2026-09-14"]
+    }
+  },
+  {
+    "name": "unknown status",
+    "status": 999,
+    "expected_kind": "other",
+    "resolution": null,
+    "submission": "2026-07-22 15:17:00",
+    "creation": "2026-07-20 08:00:00",
+    "expected_date": {"key": "status_date_submitted", "date": "2026-07-22 15:17:00"},
+    "legal_record": {
+      "text": "Unknown status data remains upstream-owned.",
+      "line_numbers": [9],
+      "authors": ["Member"],
+      "votes": ["pending"],
+      "publication_history": []
+    }
+  }
+]

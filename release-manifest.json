@@ -1,0 +1,21 @@
+{
+  "schema": 3,
+  "status": "candidate",
+  "application": {
+    "upstream_repository": "https://github.com/CatoTH/antragsgruen",
+    "upstream_version": "v4.17.1",
+    "upstream_commit": "9e0e9f39622b7ee16c46d6e4b7756504262ef6ff",
+    "image": "tobiashoessl/antragsgruen@sha256:2e9b68f791364fed12a54548c49985a6ba9bda1b7005cd8c087c685ea4a5ee49"
+  },
+  "plugin": {
+    "repository": "https://github.com/andxblink/spd_antragsplatform",
+    "source_commit": "6fd40e2cb868de713a3b18aa2d3b190d857e19b0",
+    "tree": "6160bcbdb505e8ac4498451f9be270924118ade5",
+    "files_sha256": "631aae1bda68bba01fb9fb5c546a3bc4938146979951cc29fc3f28e5ce0d799c",
+    "css_sha256": "3ae38c1aea0cfa7540608a780d5d6c2ad5318aa529e7e3669c2791d8d925012c"
+  },
+  "deployment": {
+    "phase": "testing",
+    "public_source_environment_variable": "ANTRAGSPLATFORM_PUBLIC_SOURCE_COMMIT"
+  }
+}

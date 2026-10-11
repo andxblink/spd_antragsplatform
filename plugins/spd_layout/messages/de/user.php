@@ -8,8 +8,6 @@
  */
 
 return [
-    'pwd_recovery_sent' => 'Die Passwort-Wiederherstellungs-Mail wurde zum Versand angenommen. Prüfe auch deinen Spam-Ordner.',
-    'err_recover_mail_sent' => 'Innerhalb der letzten Stunde wurde bereits eine Wiederherstellungs-Mail versendet.',
     'force_pwd_explanation' => 'Bitte lege ein neues Passwort fest, um die Antragsplatform nutzen zu können.',
     'recover_mail_title' => 'Antragsplatform: Passwort-Wiederherstellung',
     'del_explanation' => 'Hier kannst du diesen Zugang von der Antragsplatform löschen. Du erhältst keine E-Mail-Benachrichtigungen mehr,
@@ -24,7 +22,7 @@ return [
     'noti_new_comment_title' => '[Antragsplatform] Neuer Kommentar zu %TITLE%',
     'acc_grant_email_title' => 'Antragsplatform-Zugriff',
     'acc_request_noti_subject' => 'Anfrage: Zugriff auf der Antragsplatform-Seite',
-    'login_confirm_registration' => 'Ich stimme der elektronischen Verarbeitung meiner freiwilligen Angaben durch Antragsplatform zu. Meine Angaben zu Name und E-Mail-Adresse dürfen dazu verwendet werden, mir für mich passende Informationen zukommen zu lassen. Ich kann diese Zustimmung jederzeit über die im Impressum angegebenen Kontaktwege widerrufen.',
+    'login_confirm_registration' => 'Ich stimme der elektronischen Verarbeitung meiner freiwilligen Angaben durch Antragsplatform zu. Meine Angaben zu Name und E-Mail-Adresse dürfen dazu verwendet werden, mir für mich passende Informationen zukommen zu lassen. Ich kann diese Zustimmung jederzeit per Mail an info@antragsgruen.de oder per Schreiben an die im Impressum angegebene Adresse widerrufen.',
     'create_emailconfirm_title' => 'Anmeldung bei der Antragsplatform',
     'create_emailconfirm_msg' => "Hallo,\n\num deinen Antragsplatform-Zugang zu aktivieren, klicke entweder auf folgenden Link:\n" .
         "%BEST_LINK%\n\n"

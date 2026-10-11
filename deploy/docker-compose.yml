@@ -1,0 +1,126 @@
+# Production stack for spd-antragsplatform.de
+# Lives in /opt/stacks/antragsplatform on the production host.
+#
+# Differences from upstream docker-compose.yml, all deliberate:
+#  - web binds 127.0.0.1 only. Caddy is the sole public entry point.
+#    Container-to-127.0.0.1 binding is the PRIMARY isolation layer, Caddy the
+#    second, the host firewall only the third.
+#  - mysql publishes no host port at all. Upstream exposes 13306.
+#  - APP_PROTOCOL=https, APP_DOMAIN is the real domain.
+#  - restart: unless-stopped on every service.
+#  - plugins bind mounts, for plugins/modern_layout and plugins/spd_layout
+#    spd_layout extends modern_layout's classes. Mounted per plugin,
+#    NOT as a plugins/custom directory: config/common.php resolves a plugin as
+#    plugins/<name>/Module.php and AntragsgruenApp builds the namespace
+#    app\plugins\<name>, so the directory name IS the plugin id. A plugin under
+#    plugins/custom/ could only ever be called "custom".
+#  - secrets come from .env generated on the host, never committed.
+#  - every image is pinned by digest. Upstream floats on :latest.
+
+volumes:
+  mysql-data: {}
+  antragsgruen-config: {}
+
+# Pinned by digest, not by tag.
+#
+# The deploy runs `docker compose pull` every time, so a floating tag means
+# any deploy of a plugin change can also swap the application or the database
+# underneath it, with nobody having decided to upgrade. That is not hypothetical
+# here: the layout plugin is ~254 upstream CSS classes and 39 overridden message
+# keys deep, and almost all of those couplings fail silently.
+#
+# The app digest is one anchor rather than three literals so web, worker and
+# cron cannot drift apart on an upgrade that only remembers to edit web.
+#
+# Digests read off the running production containers on 2026-07-27. To upgrade,
+# deliberately: pull the new tag, read its digest, replace it here, run the
+# compatibility checks against that release, deploy, then run the release
+# health checks before considering it done.
+x-app-image: &app-image tobiashoessl/antragsgruen@sha256:2e9b68f791364fed12a54548c49985a6ba9bda1b7005cd8c087c685ea4a5ee49
+
+x-app-env: &app-env
+  APP_DOMAIN: spd-antragsplatform.de
+  APP_PROTOCOL: https
+  TRUSTED_PROXIES: 172.16.0.0/12,127.0.0.1
+  SITE_SUBDOMAIN: std
+  DB_HOST: mysql
+  DB_NAME: antragsgruen
+  DB_USER: ${DB_USER:?set in .env}
+  DB_PASSWORD: ${DB_PASSWORD:?set in .env}
+  REDIS_HOST: redis
+  RANDOM_SEED: ${RANDOM_SEED:?set in .env}
+  MAILER_DISABLED: ${MAILER_DISABLED:?set in .env; false only after mail verification}
+  MAILER_DSN: ${MAILER_DSN:-}
+  MAIL_FROM_EMAIL: noreply@spd-antragsplatform.de
+  MAIL_FROM_NAME: SPD Antragsplatform
+  WEASYPRINT_PATH: /usr/bin/weasyprint
+  QPDF_PATH: /usr/bin/qpdf
+  IMAGE_MAGICK_PATH: /usr/bin/convert
+  BACKGROUND_JOBS_NOTIFICATIONS: "true"
+  ANTRAGSPLATFORM_PUBLIC_SOURCE_COMMIT: ${ANTRAGSPLATFORM_PUBLIC_SOURCE_COMMIT:?set in .env}
+
+services:
+  web:
+    image: *app-image
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18130:80"
+    volumes:
+      - "antragsgruen-config:/var/www/html/config"
+      - "./plugins/modern_layout:/var/www/html/plugins/modern_layout:ro"
+      - "./plugins/spd_layout:/var/www/html/plugins/spd_layout:ro"
+    environment: *app-env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  worker:
+    image: *app-image
+    restart: unless-stopped
+    command: /var/www/html/yii background-job/run
+    volumes:
+      - "antragsgruen-config:/var/www/html/config"
+      - "./plugins/modern_layout:/var/www/html/plugins/modern_layout:ro"
+      - "./plugins/spd_layout:/var/www/html/plugins/spd_layout:ro"
+    environment: *app-env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  cron:
+    image: *app-image
+    restart: unless-stopped
+    command: sh -c "while true; do /var/www/html/yii background-job/cleanup; sleep 86400; done"
+    volumes:
+      - "antragsgruen-config:/var/www/html/config"
+      - "./plugins/modern_layout:/var/www/html/plugins/modern_layout:ro"
+      - "./plugins/spd_layout:/var/www/html/plugins/spd_layout:ro"
+    environment: *app-env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    # MariaDB 12.3.2. Unpinned this was the sharper of the two risks: a major
+    # version arriving through a routine deploy recreates the database
+    # container, which the application image never does.
+    image: mariadb@sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f
+    restart: unless-stopped
+    command: --max_allowed_packet=33554432
+    environment:
+      MARIADB_DATABASE: antragsgruen
+      MARIADB_USER: ${DB_USER:?set in .env}
+      MARIADB_PASSWORD: ${DB_PASSWORD:?set in .env}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?set in .env}
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis@sha256:595cc6f2bb3af6e03347b90deb6123c6aa2c81dea05ce08128de8a174b6ac67b
+    restart: unless-stopped

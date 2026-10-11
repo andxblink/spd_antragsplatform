@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace app\plugins\spd_layout;
 
+use app\models\settings\Consultation;
+
 /**
- * Install the SPD-specific server-side layout for every consultation while the
- * plugin is active. This reaches metadata rendered before layout hooks run.
+ * Consultation settings adapter for the supported specialized-layout seam.
  */
-class ConsultationSettings extends \app\models\settings\Consultation
+class ConsultationSettings extends Consultation
 {
-    /**
-     * @return class-string<\app\models\settings\Layout>
-     */
-    public function getSpecializedLayoutClass(): string
+    public function getSpecializedLayoutClass(): ?string
     {
-        return Layout::class;
+        return LayoutSettings::class;
     }
 }

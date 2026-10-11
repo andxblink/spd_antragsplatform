@@ -10,7 +10,6 @@ use app\plugins\ModuleBase;
 use yii\base\InvalidConfigException;
 use yii\web\Application;
 use yii\web\Cookie;
-use yii\web\Response;
 use yii\web\View;
 
 /**
@@ -21,12 +20,16 @@ use yii\web\View;
  * Einstellungen > Erscheinungsbild. Forcing it would remove that choice and
  * make the instance harder to debug when the layout itself is at fault.
  *
- * The layout key must stay 'std'. Layout.php stores this as
- * "layout-plugin-spd_layout-std", so renaming the key orphans consultations
- * that already reference it.
+ * The layout key must stay 'std'. Layout.php resolves a stored layout to
+ * "plugin:<pluginName>:<key>", so renaming the key orphans consultations that
+ * already reference it.
  */
 class Module extends ModuleBase
 {
+    /**
+     * Native recovery persists its token before attempting delivery. Keep the
+     * adapter registered until upstream provides an equivalent rollback seam.
+     */
     public function init(): void
     {
         parent::init();
@@ -36,60 +39,39 @@ class Module extends ModuleBase
         }
 
         \Yii::$app->on(Application::EVENT_BEFORE_REQUEST, static function (): void {
-            [$route] = \Yii::$app->getRequest()->resolve();
+            $app = \Yii::$app;
+            if (!$app instanceof Application) {
+                return;
+            }
+            [$route] = $app->getRequest()->resolve();
             if ($route !== 'user/recovery') {
                 return;
             }
 
-            $existing = \Yii::$app->controllerMap['user'] ?? null;
+            $existing = $app->controllerMap['user'] ?? null;
             if ($existing !== null && $existing !== RecoveryController::class) {
                 throw new InvalidConfigException(
                     'spd_layout cannot install its recovery controller because user is already mapped'
                 );
             }
-            \Yii::$app->controllerMap['user'] = RecoveryController::class;
-        });
-
-        \Yii::$app->on(Application::EVENT_AFTER_REQUEST, static function (): void {
-            $response = \Yii::$app->getResponse();
-            if (!$response instanceof Response) {
-                return;
-            }
-            $headers = $response->headers;
-            $headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-            $headers->set('X-Content-Type-Options', 'nosniff');
-            $headers->set('X-Frame-Options', 'SAMEORIGIN');
-            $headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
-            $headers->set('Permissions-Policy', 'camera=(), geolocation=(), microphone=()');
-            $headers->remove('X-Powered-By');
+            $app->controllerMap['user'] = RecoveryController::class;
         });
     }
 
     /**
-     * @return class-string<\app\models\settings\Consultation>
-     */
-    public static function getConsultationSettingsClass(Consultation $consultation): string
-    {
-        return ConsultationSettings::class;
-    }
-
-    /**
-     * Production runs behind HTTPS at Caddy, while local test servers remain
-     * plain HTTP. The environment-owned protocol decides whether cookies must
-     * carry Secure, before Yii creates the session and identity components.
+     * Keep authentication and CSRF cookies safe when the deployment is HTTPS.
      *
-     * @return array{secure: bool, httpOnly: bool, sameSite: string}|array{}
+     * Antragsgrün already defaults to HttpOnly/Lax, but the upstream web
+     * config only adds `secure` when the application sees the proxy's request
+     * scheme. The production proxy terminates TLS, so APP_PROTOCOL is the
+     * explicit deployment boundary for this flag.
      */
     public static function getSessionCookieSettings(): array
     {
-        if (strtolower(trim((string) getenv('APP_PROTOCOL'))) !== 'https') {
-            return [];
-        }
-
         return [
-            'secure' => true,
             'httpOnly' => true,
             'sameSite' => Cookie::SAME_SITE_LAX,
+            'secure' => strtolower((string)getenv('APP_PROTOCOL')) === 'https',
         ];
     }
 
@@ -111,6 +93,18 @@ class Module extends ModuleBase
     }
 
     /**
+     * Use Antragsgrün's supported consultation-settings seam for layout
+     * customization. This keeps title formatting server-side and avoids a
+     * client-side document.title correction.
+     *
+     * @return class-string<ConsultationSettings>
+     */
+    public static function getConsultationSettingsClass(Consultation $consultation): string
+    {
+        return ConsultationSettings::class;
+    }
+
+    /**
      * @return array<string, array{title: string, preview: string|null, bundle: class-string, hooks?: class-string<Hooks>, odtTemplate?: string}>
      */
     public static function getProvidedLayouts(?View $view = null): array
@@ -128,7 +122,7 @@ class Module extends ModuleBase
         return [
             'std' => [
                 'title'   => 'SPD Antragsplatform',
-                'preview' => $thumbBase . '/thumbnails/layout-preview-spd.png',
+                'preview' => $thumbBase . '/layout-preview-spd.png',
                 'bundle'  => Assets::class,
                 'hooks'   => LayoutHooks::class,
             ],

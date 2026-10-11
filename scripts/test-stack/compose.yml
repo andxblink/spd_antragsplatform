@@ -1,0 +1,60 @@
+# Disposable local stack for browser verification. Same application, database
+# and Redis digests as deploy/docker-compose.yml, the plugin mounted read-only,
+# throwaway secrets, and nothing that survives `scripts/test-stack.sh down`.
+# Never point this at production data.
+name: spd-test
+
+# TEST_STACK_APP_IMAGE tries an upgrade candidate (e.g. a newer release digest)
+# against the same plugin; the default is production's pin.
+x-app-image: &app-image ${TEST_STACK_APP_IMAGE:-tobiashoessl/antragsgruen@sha256:2e9b68f791364fed12a54548c49985a6ba9bda1b7005cd8c087c685ea4a5ee49}
+
+services:
+  web:
+    image: *app-image
+    ports:
+      - "127.0.0.1:${TEST_STACK_PORT:-18190}:80"
+    volumes:
+      - "config:/var/www/html/config"
+      - "../../plugins/modern_layout:/var/www/html/plugins/modern_layout:ro"
+      - "../../plugins/spd_layout:/var/www/html/plugins/spd_layout:ro"
+      - "../seed_test_consultation.php:/var/www/html/scripts/seed_test_consultation.php:ro"
+    environment:
+      APP_DOMAIN: "localhost:${TEST_STACK_PORT:-18190}"
+      APP_PROTOCOL: http
+      SITE_SUBDOMAIN: std
+      BASE_LANGUAGE: de
+      DB_HOST: mysql
+      DB_NAME: antragsgruen
+      DB_USER: antragsgruen
+      DB_PASSWORD: test-only
+      REDIS_HOST: redis
+      RANDOM_SEED: test-stack-only-not-a-secret-0123456789abcdef
+      MAILER_DISABLED: "true"
+      MAIL_FROM_EMAIL: noreply@example.org
+      ANTRAGSPLATFORM_PUBLIC_SOURCE_COMMIT: ${TEST_STACK_SOURCE_COMMIT:-}
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mariadb@sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f
+    command: --max_allowed_packet=33554432
+    tmpfs:
+      - /var/lib/mysql
+    environment:
+      MARIADB_DATABASE: antragsgruen
+      MARIADB_USER: antragsgruen
+      MARIADB_PASSWORD: test-only
+      MARIADB_ROOT_PASSWORD: test-only-root
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 3s
+      timeout: 5s
+      retries: 40
+
+  redis:
+    image: redis@sha256:595cc6f2bb3af6e03347b90deb6123c6aa2c81dea05ce08128de8a174b6ac67b
+
+volumes:
+  config:

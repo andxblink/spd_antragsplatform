@@ -1,0 +1,15 @@
+/*
+ * The icon font for the Modern layout and its variants. Published together
+ * with fonts/ by SharedAssets, so this relative URL is valid for every layout
+ * bundle that depends on it.
+ *
+ * `block` rather than `swap`: a brief blank is better than a flash of the
+ * Glyphicon at the same codepoint, which is a different picture entirely.
+ */
+@font-face {
+  font-family: "lucide";
+  src: url("fonts/lucide-subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}

@@ -1,0 +1,60 @@
+# Drops into /etc/caddy/conf.d/antragsplatform.caddy on the production host.
+# The main Caddyfile already ends with `import /etc/caddy/conf.d/*.caddy`,
+# so nothing in the 414-line main file needs editing.
+#
+# Always validate before reload:
+#   caddy validate --config /etc/caddy/Caddyfile
+#   systemctl reload caddy
+
+spd-antragsplatform.de {
+	log {
+		format filter {
+			fields {
+				request>uri query {
+					replace code REDACTED
+					replace recoveryCode REDACTED
+					replace email REDACTED
+				}
+			}
+		}
+		output file /var/log/caddy/spd-antragsplatform.de.access.log {
+			roll_size 100mb
+			roll_keep 10
+		}
+	}
+
+	encode gzip zstd
+
+	# The report-only CSP is deliberately non-enforcing while the upstream
+	# inline JavaScript is still being migrated. The other headers are enforced
+	# now; HSTS remains deferred until every intended hostname is HTTPS-ready.
+	header {
+		-Server
+		-X-Powered-By
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), geolocation=(), microphone=()"
+		Content-Security-Policy-Report-Only "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; img-src 'self' data: blob: https:; font-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https: wss:"
+	}
+
+	# The www redirect is intentionally not configured yet. DNS for
+	# www.spd-antragsplatform.de does not currently resolve, so adding a second
+	# site label would make Caddy request a certificate for a name that is not
+	# delegated. Add the label and redirect only after DNS and certificate
+	# preflight are operator-approved.
+
+	# The setup gate that sat here on 2026-07-26 is removed: the wizard has
+	# run, config/INSTALLING is gone and config.json exists, so the
+	# installer is no longer reachable.
+	#
+	# If `enable-installer.sh` is ever run again, gate this vhost first.
+	# The wizard is unauthenticated and hands the site to whoever reaches
+	# it. Caddy here is 2.6.2, where the directive is `basicauth`; it was
+	# renamed to `basic_auth` only in 2.8.
+
+	reverse_proxy 127.0.0.1:18130
+}
+
+# forum.spd-antragsplatform.de is added in P1 with the Discourse deploy.
+# Its A record already exists and points at this host.

@@ -1,0 +1,26 @@
+{
+  "viewports": [
+    {"name": "phone", "width": 390, "height": 844},
+    {"name": "tablet", "width": 768, "height": 1024},
+    {"name": "ipad-landscape", "width": 1180, "height": 820},
+    {"name": "desktop", "width": 1440, "height": 900}
+  ],
+  "routes": [
+    {"path": "/", "auth": "anonymous", "risk": "shell"},
+    {"path": "/test/motions", "auth": "member", "risk": "legal-record"},
+    {"path": "/test/motion/a5-b9fcd", "auth": "member", "risk": "legal-record"},
+    {"path": "/test/motion/a5-b9fcd/amendment/create", "auth": "member", "risk": "legal-record"},
+    {"path": "/test/feeds", "auth": "anonymous", "risk": "feeds"},
+    {"path": "/test/admin", "productionPath": "/std/admin", "auth": "admin", "risk": "permissions"},
+    {"path": "/test/admin/list", "productionPath": "/std/admin/list", "auth": "admin", "risk": "dense-table"},
+    {"path": "/test/myaccount", "productionPath": "/std/myaccount", "auth": "member", "risk": "account-recovery"}
+  ],
+  "invariants": [
+    "unique DOM ids",
+    "legal/privacy/source links resolve inside consultation",
+    "authoritative status and line numbers remain visible",
+    "no page-level horizontal overflow",
+    "focus remains visible and labels remain associated",
+    "motion, amendment, vote, author, timestamp, and publication history text is unchanged"
+  ]
+}

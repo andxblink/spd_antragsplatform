@@ -1,0 +1,3 @@
+# Upstream partials not yet imported by plugins/modern_layout, one per line,
+# with the reason. Remove a line together with adding its import.
+debate   4.18 (unreleased); imported on branch alignment/step5-418-prep, token overrides already on main
