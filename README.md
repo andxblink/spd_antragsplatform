@@ -57,7 +57,7 @@ spd-antragsplatform.de, as the site's footer links it.
 
 - Antragsgrün v4.17.1, commit `9e0e9f39622b7ee16c46d6e4b7756504262ef6ff`
 - Image `tobiashoessl/antragsgruen@sha256:2e9b68f791364fed12a54548c49985a6ba9bda1b7005cd8c087c685ea4a5ee49`
-- `plugins/` tree `6160bcbdb505e8ac4498451f9be270924118ade5`
+- `plugins/` tree `6f120e2d164dbc4d64224fb3eeaf969f656f0c5b`
 
 `git rev-parse HEAD:plugins` prints the tree id above, and
 `release-manifest.json` records the same id together with the stylesheet hash

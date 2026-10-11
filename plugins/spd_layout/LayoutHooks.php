@@ -94,6 +94,34 @@ class LayoutHooks extends ModernLayoutHooks
     }
 
     /**
+     * The SPD Friedrichshain-Kreuzberg icon instead of Antragsgrün's.
+     *
+     * Same set of links as StdHooks::favicons(), served from this plugin's
+     * published asset directory. The source is the 512px icon of
+     * spd-friedrichshain-kreuzberg.de (assets/favicons/SOURCE.md); the
+     * smaller files are downscaled from it. A content hash in the query
+     * string makes browsers fetch a changed icon. Safari's pinned-tab SVG has
+     * no equivalent here and falls back to the PNG icons.
+     */
+    public function favicons(string $before): string
+    {
+        $bundle = \Yii::$app?->assetManager->getBundle(Assets::class);
+        if ($bundle === null || !is_string($bundle->baseUrl)) {
+            return $before;
+        }
+        $url = function (string $file) use ($bundle): string {
+            $hash = substr((string)md5_file(__DIR__ . '/assets/favicons/' . $file), 0, 8);
+            return Html::encode($bundle->baseUrl . '/favicons/' . $file . '?v=' . $hash);
+        };
+
+        return '<link rel="apple-touch-icon" sizes="180x180" href="' . $url('apple-touch-icon.png') . '">
+<link rel="icon" type="image/png" sizes="32x32" href="' . $url('favicon-32x32.png') . '">
+<link rel="icon" type="image/png" sizes="16x16" href="' . $url('favicon-16x16.png') . '">
+<link rel="manifest" href="' . $url('site.webmanifest') . '">
+<meta name="theme-color" content="#ffffff">';
+    }
+
+    /**
      * Suppress upstream's "Dein Antragsgrün" promo box.
      *
      * StdHooks::getAntragsgruenAd() renders an advert for antragsgruen.de,
